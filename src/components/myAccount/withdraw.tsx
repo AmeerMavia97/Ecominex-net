@@ -20,6 +20,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { UserProfitSummary } from "@/types/userMachine";
 import { getUserBalance } from "@/lib/feature/userMachine/balanceSlice";
 import { Button } from "../ui/button";
+import DepositForm from "./DepositForm";
 
 
 interface StatsOverviewProps {
@@ -52,23 +53,23 @@ const WithdrawalDashboard = () => {
         setProfitLoading(false);
         return;
       }
-    
+
       try {
         if (isMounted) {
           setError(null);
           setProfitLoading(true);
         }
-    
+
         const [profitResult] = await Promise.all([
           dispatch(getUserBalance(user.id)).unwrap()
         ]);
-    
+
         if (isMounted && profitResult) {
           setTotalProfitData(profitResult);
           setIsInitialLoad(false);
           setRetryCount(0);
         }
-      }catch (err) {
+      } catch (err) {
         if (isMounted) {
           setError(err instanceof Error ? err.message : "Failed to fetch data");
           if (isInitialLoad && retryCount < 3) {
@@ -97,10 +98,10 @@ const WithdrawalDashboard = () => {
     };
   }, [dispatch, user?.id, isAuthenticated, retryCount]);
 
-  const StatsOverview: React.FC<StatsOverviewProps & { balance: any }> = ({ 
-    profitData, 
+  const StatsOverview: React.FC<StatsOverviewProps & { balance: any }> = ({
+    profitData,
     onWithdrawClick,
-    balance 
+    balance
   }) => (
     <div className="space-y-6">
       {/* Total Balance Card */}
@@ -125,10 +126,10 @@ const WithdrawalDashboard = () => {
           </div>
         </div>
       </div>
-  
+
       {/* Action Buttons */}
-      <div className="grid grid-cols-1 gap-4 px-4 sm:px-8 md:px-12 lg:px-48">
-        {/* Deposit Button */}
+      {/* <div className="grid grid-cols-1 gap-4 px-4 sm:px-8 md:px-12 lg:px-48">
+        Deposit Button
         <Button
           size="lg"
           onClick={() => window.open('https://wa.me/+18079074455', '_blank')}
@@ -137,9 +138,9 @@ const WithdrawalDashboard = () => {
           <Plus className="mr-2 h-6 w-6 sm:h-10 sm:w-10 text-2xl sm:text-4xl" />
           Deposit
         </Button>
-  
-    
-      </div>
+
+
+      </div> */}
     </div>
   );
 
@@ -179,11 +180,16 @@ const WithdrawalDashboard = () => {
         <>
           {totalProfitData && (
             <>
-            <StatsOverview
-      profitData={totalProfitData}
-      onWithdrawClick={() => setIsWithdrawDialogOpen(true)}
-      balance={balance}
-    />
+              <StatsOverview
+                profitData={totalProfitData}
+                onWithdrawClick={() => setIsWithdrawDialogOpen(true)}
+                balance={balance}
+              />
+               {isAuthenticated && (
+                <DepositForm
+                  userEmail={user.email}
+                />
+              )}
               {isAuthenticated && (
                 <WithdrawalDialog
                   availableBalance={totalProfitData.totalProfit}

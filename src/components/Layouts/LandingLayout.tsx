@@ -21,7 +21,6 @@ export default function LandingLayout({
   return (
     <>
       <div className="bg-black-2" >
-        <AdminNavbar />
         <FloatingWhatsApp phoneNumber="YOUR_PHONE_NUMBER" />
 
             <HomeNavbar />

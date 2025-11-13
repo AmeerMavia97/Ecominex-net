@@ -54,9 +54,15 @@ const TwoStepVerification: React.FC = () => {
     }
 
     try {
-      await verifyotp({ email, otp: fullCode }).unwrap();
+     const response = await verifyotp({ email, otp: fullCode }).unwrap();
+
+     console.log(response);
+     
+
       toast.success("✅ Verification successful!");
       localStorage.setItem("IsAuthenticate", "true");
+      localStorage.removeItem("VerfiyEmail");
+      localStorage.setItem("token", response.token);
       router.push("/");
     } catch (err) {
       console.error(err);

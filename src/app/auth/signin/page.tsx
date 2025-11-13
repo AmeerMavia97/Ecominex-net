@@ -39,6 +39,7 @@ export default function LoginPage() {
         router.push("/");
       }, 100);
       localStorage.setItem("IsAuthenticate" , "true")
+      localStorage.setItem("token" , userData.token)
     } catch (error) {
       const err = error as LoginError;
       if (err?.status === 404) {
