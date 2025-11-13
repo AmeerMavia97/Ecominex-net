@@ -62,12 +62,13 @@ ROI - Monthly: ${MONTHLY_ROI}% | Yearly: ${YEARLY_ROI}%`;
 
       <Card className="p-8 bg-card/50 backdrop-blur-sm border-border shadow-lg space-y-8">
         <div className="space-y-3">
-          <label className="text-sm font-medium text-foreground">
+          <label className="text-sm font-medium text-foreground text-white">
             Number of Shares
           </label>
           <Input
             type="number"
             value={shares}
+          
             onChange={(e) =>
               setShares(Math.max(0, parseInt(e.target.value) || 0))
             }

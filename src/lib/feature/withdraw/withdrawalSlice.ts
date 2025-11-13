@@ -4,80 +4,102 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '@/utils/axiosInstance';
 import { RootState } from '@/lib/store/store';
 
-import { WithdrawalState ,  Withdrawal,
+import {
+  WithdrawalState, Withdrawal,
   WithdrawalRequest,
   WithdrawalResponse,
   WithdrawalListResponse,
   WithdrawalStats,
-  ProcessWithdrawalPayload, 
+  ProcessWithdrawalPayload,
   FetchAllWithdrawalsParams,
   BalanceHistoryParams,
   UserBalanceResponse,
   BalanceUpdateResponse,
-  BalanceUpdateRequest} from '@/types/withdrawals';
+  BalanceUpdateRequest
+} from '@/types/withdrawals';
 
 
-  
-  export const requestWithdrawal = createAsyncThunk<
-    WithdrawalResponse,
-    WithdrawalRequest,
-    { rejectValue: string }
-  >(
-    'withdrawal/request',
-    async (withdrawalData, { rejectWithValue }) => {
-      try {
-        const response = await axiosInstance.post<WithdrawalResponse>(
-          '/api/v1/withdrawals/request',
-          withdrawalData
-        );
-        return response.data;
-      } catch (error: any) {
-        return rejectWithValue(error.response?.data?.message || 'Failed to request withdrawal');
-      }
+
+export const requestWithdrawal = createAsyncThunk<
+  WithdrawalResponse,
+  WithdrawalRequest,
+  { rejectValue: string }
+>(
+  'withdrawal/request',
+  async (withdrawalData, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post<WithdrawalResponse>(
+        '/api/v1/withdrawals/request',
+        withdrawalData
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to request withdrawal');
     }
-  );
-  
-  export const processWithdrawalRequest = createAsyncThunk<
-    WithdrawalResponse,
-    ProcessWithdrawalPayload,
-    { rejectValue: string }
-  >(
-    'withdrawal/process',
-    async (processData, { rejectWithValue }) => {
-      try {
-        const response = await axiosInstance.post<WithdrawalResponse>(
-          '/api/v1/withdrawals/process',
-          processData
-        );
-        return response.data;
-      } catch (error: any) {
-        return rejectWithValue(error.response?.data?.message || 'Failed to process withdrawal');
-      }
+  }
+);
+
+export const createWithdrawal = createAsyncThunk<
+  WithdrawalResponse,              // expected success type
+  { amount: number; walletNumber: string; walletType: string; walletName: string }, // request payload
+  { rejectValue: string }          // error type
+>(
+  'withdrawal/create',
+  async (withdrawalData, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post<WithdrawalResponse>(
+        '/api/v1/withdrawals/create',
+        withdrawalData
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to create withdrawal');
     }
-  );
-  
-  export const fetchPendingWithdrawals = createAsyncThunk<
-    WithdrawalListResponse,
-    { page?: number; limit?: number },
-    { rejectValue: string }
-  >(
-    'withdrawal/fetchPending',
-    async ({ page = 1, limit = 20 }, { rejectWithValue }) => {
-      try {
-        const response = await axiosInstance.get<WithdrawalListResponse>(
-          '/api/v1/withdrawals/pending',
-          { params: { page, limit } }
-        );
-        return response.data;
-      } catch (error: any) {
-        return rejectWithValue(error.response?.data?.message || 'Failed to fetch pending withdrawals');
-      }
+  }
+);
+
+
+export const processWithdrawalRequest = createAsyncThunk<
+  WithdrawalResponse,
+  ProcessWithdrawalPayload,
+  { rejectValue: string }
+>(
+  'withdrawal/process',
+  async (processData, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post<WithdrawalResponse>(
+        '/api/v1/withdrawals/process',
+        processData
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to process withdrawal');
     }
-  );
-  
-  export const fetchUserWithdrawals = createAsyncThunk<
+  }
+);
+
+export const fetchPendingWithdrawals = createAsyncThunk<
   WithdrawalListResponse,
-  { email: string; page?: number; limit?: number },  
+  { page?: number; limit?: number },
+  { rejectValue: string }
+>(
+  'withdrawal/fetchPending',
+  async ({ page = 1, limit = 20 }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get<WithdrawalListResponse>(
+        '/api/v1/withdrawals/pending',
+        { params: { page, limit } }
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch pending withdrawals');
+    }
+  }
+);
+
+export const fetchUserWithdrawals = createAsyncThunk<
+  WithdrawalListResponse,
+  { email: string; page?: number; limit?: number },
   { rejectValue: string }
 >(
   'withdrawal/fetchUserWithdrawals',
@@ -85,12 +107,12 @@ import { WithdrawalState ,  Withdrawal,
     try {
       const response = await axiosInstance.get<WithdrawalListResponse>(
         `/api/v1/withdrawals/by-email`, // Change endpoint
-        { 
-          params: { 
+        {
+          params: {
             email,  // Pass email as query parameter
-            page, 
-            limit 
-          } 
+            page,
+            limit
+          }
         }
       );
       return response.data;
@@ -99,26 +121,26 @@ import { WithdrawalState ,  Withdrawal,
     }
   }
 );
-  
-  export const fetchWithdrawalStats = createAsyncThunk<
-    WithdrawalStats,
-    void,
-    { rejectValue: string }
-  >(
-    'withdrawal/fetchStats',
-    async (_, { rejectWithValue }) => {
-      try {
-        const response = await axiosInstance.get<WithdrawalStats>(
-          '/api/v1/withdrawals/stats'
-        );
-        return response.data;
-      } catch (error: any) {
-        return rejectWithValue(error.response?.data?.message || 'Failed to fetch withdrawal statistics');
-      }
-    }
-  );
 
-  export const fetchAllWithdrawals = createAsyncThunk<
+export const fetchWithdrawalStats = createAsyncThunk<
+  WithdrawalStats,
+  void,
+  { rejectValue: string }
+>(
+  'withdrawal/fetchStats',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get<WithdrawalStats>(
+        '/api/v1/withdrawals/stats'
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch withdrawal statistics');
+    }
+  }
+);
+
+export const fetchAllWithdrawals = createAsyncThunk<
   WithdrawalListResponse,
   FetchAllWithdrawalsParams,
   { rejectValue: string }
@@ -252,10 +274,10 @@ const withdrawalSlice = createSlice({
       state.isLoading = false;
       // Update both withdrawals and pending withdrawals lists
       const updatedWithdrawal = action.payload.transaction;
-      state.withdrawals = state.withdrawals.map(w => 
+      state.withdrawals = state.withdrawals.map(w =>
         w._id === updatedWithdrawal._id ? updatedWithdrawal : w
       );
-      state.pendingWithdrawals = state.pendingWithdrawals.filter(w => 
+      state.pendingWithdrawals = state.pendingWithdrawals.filter(w =>
         w._id !== updatedWithdrawal._id
       );
     });
@@ -319,7 +341,7 @@ const withdrawalSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     });
-    
+
     builder.addCase(fetchAllWithdrawals.fulfilled, (state, action) => {
       state.isLoading = false;
       state.allWithdrawals = action.payload.withdrawals; // Verify this matches the API response structure
@@ -329,11 +351,27 @@ const withdrawalSlice = createSlice({
         totalWithdrawals: action.payload.totalWithdrawals
       };
     });
-    
+
     builder.addCase(fetchAllWithdrawals.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload || 'Failed to fetch all withdrawals';
     });
+
+    // Create Withdrawal
+    builder.addCase(createWithdrawal.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(createWithdrawal.fulfilled, (state, action) => {
+      state.isLoading = false;
+      // Add new withdrawal to the list
+      state.withdrawals.unshift(action.payload.transaction);
+    });
+    builder.addCase(createWithdrawal.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload || 'Failed to create withdrawal';
+    });
+
   }
 });
 

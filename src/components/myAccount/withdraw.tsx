@@ -21,6 +21,7 @@ import { UserProfitSummary } from "@/types/userMachine";
 import { getUserBalance } from "@/lib/feature/userMachine/balanceSlice";
 import { Button } from "../ui/button";
 import DepositForm from "./DepositForm";
+import DepositStepForm from "./DepositStepForm";
 
 
 interface StatsOverviewProps {
@@ -186,7 +187,7 @@ const WithdrawalDashboard = () => {
                 balance={balance}
               />
                {isAuthenticated && (
-                <DepositForm
+                <DepositStepForm
                   userEmail={user.email}
                 />
               )}
