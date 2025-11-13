@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AppDispatch, RootState } from "@/lib/store/store";
-import { requestDeposit } from "@/lib/feature/deposit/depositSlice"; // ✅ Correct import
+import { requestDeposit } from "@/lib/feature/Deposit/depositSlice"; // ✅ Correct import
 
 const MIN_WITHDRAWAL = 50;
 
