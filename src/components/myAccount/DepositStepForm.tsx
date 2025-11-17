@@ -23,7 +23,7 @@ import { AppDispatch, RootState } from "@/lib/store/store";
 
 const MIN_WITHDRAWAL = 50;
 
-const DepositStepForm = ({ onSuccess }) => {
+const DepositStepForm = ({ onSuccess ,style }) => {
   const dispatch = useDispatch<AppDispatch>();
   const balance = useSelector((state: RootState) => state.balance.userBalance);
   const availableBalance = balance?.balances?.total || 0;
@@ -65,10 +65,10 @@ const DepositStepForm = ({ onSuccess }) => {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <div className="px-4 sm:px-8 md:px-12 lg:px-48">
+        <div className={`${!style && "px-4 sm:px-8 md:px-12 lg:px-48" }`}>
           <Button
             size="lg"
-            className="bg-gradient-to-br p-4 sm:p-8 from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white font-medium shadow-lg shadow-blue-500/20 transition-all duration-300 ease-out hover:shadow-blue-500/30 hover:scale-[1.02] w-full"
+            className={`bg-gradient-to-br  ${style ? "from-[#21eb00] via-[#138901] to-[#176b0a] p-4 sm:px-4.5 sm:py-3" : "from-blue-500 via-blue-600 to-blue-700  p-4 sm:p-8" } hover:from-blue-600 hover:via-blue-700  hover:to-blue-800 text-white font-medium shadow-lg shadow-blue-500/20 transition-all duration-300 ease-out hover:shadow-blue-500/30 hover:scale-[1.02] w-full`}
           >
             <DollarSign className="mr-2 h-6 w-6 sm:h-10 sm:w-10" />
             Deposit Funds

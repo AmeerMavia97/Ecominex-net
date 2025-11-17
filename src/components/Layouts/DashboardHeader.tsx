@@ -7,17 +7,20 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store/store";
 import Link from "next/link";
+import DepositStepForm from "../myAccount/DepositStepForm";
 
 const DashboardHeader = ({ children }: { children?: React.ReactNode }) => {
   // ✅ Move useSelector *inside* the component
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   return (
     <div>
       {/* Header Bar */}
       <div className="flex justify-between items-center bg-[#2e2e2ea2] rounded-md p-4 mb-4">
         {/* LEFT SIDE — Search Bar */}
-        <div className="relative w-full max-w-sm">
+        <div className="relative w-full max-w-2xl">
           {/* <Search
             size={18}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-white z-10 pointer-events-none"
@@ -30,15 +33,23 @@ const DashboardHeader = ({ children }: { children?: React.ReactNode }) => {
           />
            */}
           <h2 className="text-3xl font-semibold mb-2">
-          Welcome back,{" "}
-          <span className="text-[#21eb00]">{user?.firstName} {user?.lastName}</span>
-        </h2>
+            Welcome back,{" "}
+            <span className="text-[#21eb00]">{user?.firstName} {user?.lastName}</span>
+          </h2>
         </div>
 
         {/* RIGHT SIDE — Icons + Profile */}
         <div className="flex items-center gap-6">
           {/* Icons */}
+          <div>
+            {isAuthenticated && (
+              <DepositStepForm
+                style={true}
+              />
+            )}
+          </div>
           <div className="flex items-center gap-4">
+
             <Link href="/Dashboard/UserProfile">
               <Settings
                 size={20}
@@ -47,8 +58,9 @@ const DashboardHeader = ({ children }: { children?: React.ReactNode }) => {
             </Link>
           </div>
 
+
           {/* Profile */}
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <Image
               src={userImg}
               alt="Profile"
@@ -64,7 +76,7 @@ const DashboardHeader = ({ children }: { children?: React.ReactNode }) => {
                 {user?.email || "noemail@domain.com"}
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

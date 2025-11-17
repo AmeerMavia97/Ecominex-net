@@ -18,6 +18,8 @@ import shareMachineReducer from '../feature/shareMachine/shareMachineSlice';
 import { baseApiSlice } from './apiSlice';
 import { miningMachinesApiSlice } from '../feature/Machines/miningMachinesApiSlice';
 import withdrawalReducer from '../feature/withdraw/withdrawalSlice';
+import profitReducer from '../feature/userMachine/profitSlice';
+
 
 const PERSIST_KEYS = {
   ROOT: 'root',
@@ -67,6 +69,7 @@ export const store = configureStore({
     [PERSIST_KEYS.TRANSACTION]: persistedTransactionReducer,
     [PERSIST_KEYS.CONTACT]: persistedContactReducer,
     [PERSIST_KEYS.SHARE_MACHINE]: persistedShareMachineReducer, // Added share machine reducer
+      profit: profitReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

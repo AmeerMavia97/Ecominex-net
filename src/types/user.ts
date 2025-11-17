@@ -1,5 +1,5 @@
 export interface User {
-  _id: string;
+  id: string;
   firstName?: string;
   lastName: string;
   email: string;
@@ -35,4 +35,19 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   token: string | null;
+}
+
+
+export interface Referral {
+  firstName: string;
+  lastName: string;
+  email: string;
+  createdAt: string;      // ISO date string
+  deposit_count: number;  // number of deposits
+  discount: string;       // discount percentage in string
+}
+
+export interface ReferralResponse {
+  success: boolean;
+  referrals: Referral[];
 }

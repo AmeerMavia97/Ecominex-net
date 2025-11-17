@@ -1,5 +1,5 @@
 import { baseApiSlice } from '../../store/apiSlice';
-import { AuthResponse, LoginCredentials, RegisterCredentials, User, VerifyOtp } from '../../../types/user';
+import { AuthResponse, LoginCredentials, ReferralResponse, RegisterCredentials, User, VerifyOtp, } from '../../../types/user';
 
 export const authApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -67,6 +67,15 @@ export const authApiSlice = baseApiSlice.injectEndpoints({
         credentials: 'include',        // Added for consistency
       }),
     }),
+    referrals: builder.query<ReferralResponse, string>({
+      query: (id) => ({
+        url: `api/v1/referrals/${id}`,
+        method: 'GET',
+        credentials: 'include',
+      }),
+      providesTags: ['User'],
+    }),
+
   }),
 });
 
@@ -77,5 +86,6 @@ export const {
   useGetCurrentUserQuery,
   useUpdateProfileMutation,
   useVerifyPasswordMutation,
-  useVerifyotpMutation
+  useVerifyotpMutation,
+  useReferralsQuery
 } = authApiSlice;

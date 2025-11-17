@@ -105,6 +105,39 @@ export const fetchProfitPercentages = createAsyncThunk<
     }
   }
 );
+export interface Referral {
+  firstName: string;
+  lastName: string;
+  email: string;
+  createdAt: string;
+  deposit_count: number;
+  discount: string;
+}
+
+// update async thunk to match API
+export const getReferralById = createAsyncThunk<
+  Referral[], // array
+   string,       
+  { state: RootState, rejectValue: string }
+>(
+  'referrals/getReferralById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get<{ success: boolean; total: number; users: Referral[] }>(
+        `/api/v1/referrals/${id}`
+      );
+      return response.data.users;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch referral');
+    }
+  }
+);
+
+interface ReferralState {
+  referralData: Referral[];
+  loading: boolean;
+  error: string | null;
+}
 
 interface ProfitState {
   profitUpdates: Record<string, ProfitUpdateStatus>;
@@ -112,17 +145,25 @@ interface ProfitState {
   loading: boolean;
   error: string | null;
   profitPercentages: ProfitPercentageResponse | null; // Add this
+  referrals: ReferralState;
 
 }
+
 
 const initialState: ProfitState = {
   profitUpdates: {},
   totalProfit: null,
   loading: false,
   error: null,
-  profitPercentages: null, // Add this
-
+  profitPercentages: null,
+  referrals: {
+   referralData: [], 
+    loading: false,
+    error: null,
+  },
 };
+
+
 
 const profitSlice = createSlice({
   name: 'profit',
@@ -183,7 +224,23 @@ const profitSlice = createSlice({
       .addCase(fetchProfitPercentages.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to fetch profit percentages';
-      });
+      })
+
+      .addCase(getReferralById.pending, (state) => {
+        state.referrals.loading = true;
+        state.referrals.error = null;
+        state.referrals.referralData = [];
+      })
+      .addCase(getReferralById.fulfilled, (state, action) => {
+        state.referrals.loading = false;
+        state.referrals.referralData = action.payload;
+        state.referrals.error = null;
+      })
+      .addCase(getReferralById.rejected, (state, action) => {
+        state.referrals.loading = false;
+        state.referrals.error = action.payload || 'Failed to fetch referral';
+        state.referrals.referralData = [];
+      })
   },
 });
 

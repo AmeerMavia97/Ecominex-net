@@ -45,6 +45,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     { link: "/Dashboard/TotalMachine", icon: Cpu, label: "Total Machine" },
     { link: "/Dashboard/UserProfile", icon: User, label: "Profile" },
     { link: "/Dashboard/Payments", icon: CreditCard, label: "Payments" },
+    { link: "/Dashboard/Referral", icon: CreditCard, label: "Referrals" },
     { link: "#", icon: LogOut, label: "Logout" },
   ];
   useEffect(() => {
@@ -119,13 +120,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
      <ProtectedRoutes>
 
     
-    <div className="flex min-h-screen flex-col bg-black text-white lg:flex-row">
+    <div className="flex min-h-screen flex-col bg-[#000] text-white lg:flex-row">
       {/* Desktop Sidebar */}
       <motion.div
         initial={{ x: -250, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5, type: "spring" }}
-        className="hidden lg:flex lg:w-64 flex-col border-r-2 border-zinc-700 bg-black p-2 backdrop-blur-md"
+        className="hidden lg:flex lg:w-64 flex-col border-r-2 border-zinc-700 bg-[#000] p-2 backdrop-blur-md"
       >
         <Link href="/" className="flex items-center space-x-2 mx-4 my-8">
           <span className="text-3xl font-bold">Ecomine</span>
@@ -174,7 +175,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       )}
 
       {/* Main Content */}
-      <div className="flex-1 bg-black pt-16 lg:pt-0">
+      <div className="flex-1 bg-[#000] pt-16 lg:pt-0">
         <div className="mx-auto max-w-full p-4">{children}</div>
       </div>
     </div>
