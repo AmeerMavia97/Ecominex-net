@@ -191,8 +191,8 @@ export default function RegisterPage() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-2 md:gap-6 gap-4">
-              <InputField  requireds={true} label="First Name" value={firstName} onChange={setFirstName} />
-              <InputField  requireds={true} label="Last Name" value={lastName} onChange={setLastName} />
+              <InputField max={20}  requireds={true} label="First Name" value={firstName} onChange={setFirstName} />
+              <InputField  max={20} requireds={true} label="Last Name" value={lastName} onChange={setLastName} />
             </div>
 
             <InputField
@@ -305,7 +305,7 @@ export default function RegisterPage() {
   );
 }
 
-const InputField = ({ label, value, onChange, type = "text"  , requireds }) => (
+const InputField = ({ label, value, onChange, type = "text"  , requireds , max }) => (
   <div>
     <label className="mb-2 block text-sm font-medium text-gray-300">
       {label}
@@ -317,6 +317,7 @@ const InputField = ({ label, value, onChange, type = "text"  , requireds }) => (
       onChange={(e) => onChange(e.target.value)}
       className="w-full rounded-lg border border-gray-600 bg-gray-700/50 p-3 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none transition-all"
       required={requireds || false}
+      maxLength={max}
     />
   </div>
 );

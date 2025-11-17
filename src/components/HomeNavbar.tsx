@@ -76,9 +76,8 @@ const HomeNavbar = () => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`relative font-[500] hover:text-green-500 text-[14px] transition-colors ${
-                    pathname === link.href ? "text-green-500" : "text-white"
-                  }`}
+                  className={`relative font-[500] hover:text-green-500 text-[14px] transition-colors ${pathname === link.href ? "text-green-500" : "text-white"
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -92,14 +91,18 @@ const HomeNavbar = () => {
                   <div className="h-6 w-24 animate-pulse rounded bg-gray-700"></div>
                 ) : isAuthenticated ? (
                   <Link href="/Dashboard">
-                    <span className="text-green-500 font-bold">Dashboard</span>
+                    <button className="!font-semibold border-[1px] px-4 py-2 text-[13.5px] rounded-full border-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all">
+                 Dashboard
+                </button>
                   </Link>
                 ) : (
                   <Link
                     href="/auth/signin"
-                    className="transition-colors hover:text-green-500 text-[12px] font-[550] text-[#dedede] tracking-[0.5px]"
+                   
                   >
-                    LOGIN / REGISTER
+                    <button className="!font-semibold border-[1px] px-4 py-2 text-[12.5px] rounded-full border-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all tracking-[0.5px]">
+                      LOGIN / REGISTER
+                    </button>
                   </Link>
                 )}
               </div>

@@ -36,7 +36,7 @@ export default function LoginPage() {
       toast.success("Login successful!");
       setTimeout(() => {
         const authState = store.getState().auth;
-        router.push("/");
+        router.push("/Dashboard/");
       }, 100);
       localStorage.setItem("IsAuthenticate" , "true")
       localStorage.setItem("token" , userData.token)
@@ -160,7 +160,7 @@ export default function LoginPage() {
                   <span className="text-sm text-gray-300">Remember me</span>
                 </label>
                 <Link
-                  href="/lost-password"
+                  href="/auth/reset-password"
                   className="text-sm text-green-400 hover:text-green-500 transition-colors"
                 >
                   Lost your password?
