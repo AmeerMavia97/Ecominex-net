@@ -23,7 +23,7 @@ import { AppDispatch, RootState } from "@/lib/store/store";
 
 const MIN_WITHDRAWAL = 50;
 
-const DepositStepForm = ({ onSuccess ,style }) => {
+const DepositStepForm = ({style }) => {
   const dispatch = useDispatch<AppDispatch>();
   const balance = useSelector((state: RootState) => state.balance.userBalance);
   const availableBalance = balance?.balances?.total || 0;
