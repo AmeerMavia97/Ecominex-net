@@ -99,6 +99,9 @@ const DashboardHero = () => {
   const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
   const balance = useSelector((state: RootState) => state.balance.userBalance);
 
+  console.log(balance);
+  
+
   const formattedTotalBalance = balance?.balances?.total?.toLocaleString() || "0";
   const formattedMiningBalance = balance?.balances?.mining?.toLocaleString() || "0";
 

@@ -44,7 +44,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
     : `${calendlyUrl}?primary_color=20e202`;
 
   return (
-    <div className="mx-auto max-w-7xl bg-gray-900 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <div className="mx-auto max-w-7xl bg-[#101010] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
       <div className="mx-auto max-w-2xl lg:max-w-4xl">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-4xl font-extrabold text-white">{title}</h2>

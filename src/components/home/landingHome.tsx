@@ -14,6 +14,7 @@ import PhotoStrip from "../home2/FollowUs";
 import FAQSection from "../home2/FaqSection";
 import Testimonials from "../home2/Testimonial";
 import HomeAboutImage from "../../../public/AboutUS.jpg"; // Next.js image import
+import HomeContactSection from "../home2/ContactSection";
 
 function LandingHome() {
   return (
@@ -43,7 +44,7 @@ function LandingHome() {
         <Testimonials></Testimonials>
 
         <PhotoStrip />
-
+<HomeContactSection></HomeContactSection>
         {/* <HeroSection />
       <SolutionCard/>
       <ModernAboutSegments/>
