@@ -51,3 +51,19 @@ export interface ReferralResponse {
   success: boolean;
   referrals: Referral[];
 }
+
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordRequest {
+  userId: string;
+  currentPassword: string;
+  newPassword: string;
+}

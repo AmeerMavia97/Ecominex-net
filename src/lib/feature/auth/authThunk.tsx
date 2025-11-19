@@ -1,8 +1,19 @@
 import { baseApiSlice } from '../../store/apiSlice';
-import { AuthResponse, LoginCredentials, ReferralResponse, RegisterCredentials, User, VerifyOtp, } from '../../../types/user';
+import {
+  AuthResponse,
+  LoginCredentials,
+  ReferralResponse,
+  RegisterCredentials,
+  User,
+  VerifyOtp,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+  ChangePasswordRequest
+} from '../../../types/user';
 
 export const authApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
+
     register: builder.mutation<AuthResponse, RegisterCredentials>({
       query: (credentials) => ({
         url: 'api/v1/register',
@@ -12,6 +23,7 @@ export const authApiSlice = baseApiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+
     verifyotp: builder.mutation<AuthResponse, VerifyOtp>({
       query: (credentials) => ({
         url: 'api/v1/verify-otp',
@@ -33,8 +45,8 @@ export const authApiSlice = baseApiSlice.injectEndpoints({
 
     logout: builder.mutation<{ message: string }, void>({
       query: () => ({
-        url: 'api/v1/logout',  // Updated to match backend route
-        method: 'POST',        // Updated to match backend method
+        url: 'api/v1/logout',
+        method: 'POST',
         credentials: 'include',
       }),
       invalidatesTags: ['User'],
@@ -51,10 +63,10 @@ export const authApiSlice = baseApiSlice.injectEndpoints({
 
     updateProfile: builder.mutation<User, Partial<User>>({
       query: (updates) => ({
-        url: 'api/v1/profile/update',  // Updated to match backend route
-        method: 'PUT',                 // Updated to match backend method
+        url: 'api/v1/profile/update',
+        method: 'PUT',
         body: updates,
-        credentials: 'include',        // Added for consistency
+        credentials: 'include',
       }),
       invalidatesTags: ['User'],
     }),
@@ -64,9 +76,10 @@ export const authApiSlice = baseApiSlice.injectEndpoints({
         url: 'api/v1/verify-password',
         method: 'POST',
         body: data,
-        credentials: 'include',        // Added for consistency
+        credentials: 'include',
       }),
     }),
+
     referrals: builder.query<ReferralResponse, string>({
       query: (id) => ({
         url: `api/v1/referrals/${id}`,
@@ -74,6 +87,50 @@ export const authApiSlice = baseApiSlice.injectEndpoints({
         credentials: 'include',
       }),
       providesTags: ['User'],
+    }),
+
+
+    // ------------------------------------------------------
+    // ⭐ ADDED NEW API 1: Change Password
+    // ------------------------------------------------------
+    changePassword: builder.mutation<
+      { message: string },
+      ChangePasswordRequest
+    >({
+      query: (data) => ({
+        url: 'api/v1/change-password',
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      }),
+    }),
+
+    // ------------------------------------------------------
+    // ⭐ ADDED NEW API 2: Forgot Password (send email)
+    // ------------------------------------------------------
+    forgotPassword: builder.mutation<
+      { message: string },
+      ForgotPasswordRequest
+    >({
+      query: (data) => ({
+        url: 'api/v1/forget-password',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    // ------------------------------------------------------
+    // ⭐ ADDED NEW API 3: Reset Password (token + new pass)
+    // ------------------------------------------------------
+    resetPassword: builder.mutation<
+      { message: string },
+      ResetPasswordRequest
+    >({
+      query: (data) => ({
+        url: 'api/v1/reset-password',
+        method: 'POST',
+        body: data,
+      }),
     }),
 
   }),
@@ -87,5 +144,8 @@ export const {
   useUpdateProfileMutation,
   useVerifyPasswordMutation,
   useVerifyotpMutation,
-  useReferralsQuery
+  useReferralsQuery,
+  useChangePasswordMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = authApiSlice;
