@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useState } from "react";
@@ -11,13 +10,22 @@ import "react-toastify/dist/ReactToastify.css";
 import "@/css/style.css";
 import { motion } from "framer-motion";
 
+
+
+interface PasswordFieldProps {
+  label: string;
+  visible: boolean;
+  toggle: () => void;
+  onChange: (val: string) => void;
+  value: string;
+}
+
+
+
 export default function ResetPasswordPage() {
   const router = useRouter();
-  const { token } = useParams();
-
-
-  console.log(token);
-  
+  const params = useParams<{ token: string }>();
+  const token = params.token;
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,7 +34,13 @@ export default function ResetPasswordPage() {
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
-  // 🔥 Password validation function
+  if (!token) {
+    toast.error("Invalid password reset token");
+    router.push("/auth/forgot-password");
+    return;
+  }
+
+
   const validatePassword = (pass: string) => {
     const errors = [];
 
@@ -42,7 +56,6 @@ export default function ResetPasswordPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // ✅ Check passwords match
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -55,7 +68,6 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    // 🔥 Call API
     try {
       const res = await resetPassword({
         token,
@@ -69,7 +81,7 @@ export default function ResetPasswordPage() {
       }, 1200);
     } catch (error: any) {
       console.log(error);
-      
+
       toast.error(error?.data?.message || "Something went wrong.");
     }
   };
@@ -151,7 +163,13 @@ export default function ResetPasswordPage() {
   );
 }
 
-const PasswordField = ({ label, visible, toggle, onChange, value }) => (
+const PasswordField: React.FC<PasswordFieldProps> = ({
+  label,
+  visible,
+  toggle,
+  onChange,
+  value,
+}) => (
   <div className="relative w-full mt-0">
     <input
       type={visible ? "text" : "password"}

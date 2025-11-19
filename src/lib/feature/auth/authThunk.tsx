@@ -124,14 +124,15 @@ export const authApiSlice = baseApiSlice.injectEndpoints({
     // ------------------------------------------------------
     resetPassword: builder.mutation<
       { message: string },
-      ResetPasswordRequest
+      { token: string; Password: string }
     >({
       query: (data) => ({
-        url: 'api/v1/reset-password',
-        method: 'POST',
-        body: data,
+        url: `/reset-password/${data.token}`,
+        method: "POST",
+        body: { password: data.Password },
       }),
-    }),
+    })
+
 
   }),
 });
