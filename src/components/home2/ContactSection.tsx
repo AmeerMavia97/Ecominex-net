@@ -5,7 +5,7 @@ const HomeContactSection = () => {
     return (
         <section className=" pt-10 pb-20 sm:py-20 text-white">
             <div className="">
-          <div className='absolute overflow-hidden bg-[#22c55e]  blur-[139px]  -right-10 h-[160px] w-[160px]'></div>
+          <div className='absolute overflow-x-hidden bg-[#22c55e]  blur-[139px]  -right-10 h-[160px] w-[160px]'></div>
 
 
                 <div className="text-center flex flex-col justify-center items-center">

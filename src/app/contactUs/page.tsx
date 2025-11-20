@@ -10,29 +10,45 @@ type QA = { q: string; a: string };
 
 const FAQS: QA[] = [
     {
-        q: "What is cryptocurrency mining and how does it work?",
-        a: "Mining secures a blockchain by validating new blocks of transactions. ASIC/GPUs compete to find a cryptographic nonce; the winner adds a block and receives block rewards + fees.",
+        q: "How can I get started?",
+        a: "Getting started is easy! Sign up for an account, and you'll have access to our platform's features. No credit card required for the initial signup.",
     },
     {
-        q: "How does EcomineX Hosting ensure the security of investments in mining?",
-        a: "Physical access controls, 24/7 monitoring, redundant power, and strict firmware policies. Revenue wallets are non-custodial so you retain control of proceeds.",
+        q: "What is the pricing structure?",
+        a: "Our pricing structure is flexible. We offer both free and paid plans. You can choose the one that suits your needs and budget.",
     },
     {
-        q: "What is the expected return on investment (ROI) from cryptocurrency mining?",
-        a: "ROI depends on hardware efficiency, power rate, network difficulty, price, uptime, and pool fees. We provide per-site calculators with conservative assumptions.",
+        q: "What kind of support do you provide?",
+        a: "We offer comprehensive customer support. You can reach out to our support team through various channels, including email, chat, and a knowledge base.",
     },
     {
-        q: "What is the minimum investment duration with EcomineX Hosting?",
-        a: "Typical hosting terms range 6–12 months; earlier exits are possible subject to de-rack and logistics fees.",
+        q: "Can I cancel my subscription anytime?",
+        a: "Yes, you can cancel your subscription at any time without any hidden fees. We believe in providing a hassle-free experience for our users.",
     },
     {
-        q: "Is it still profitable to mine cryptocurrencies today?",
-        a: "With efficient hardware and competitive electricity, yes—though profitability is volatile. Hedging and smart curtailment strategies help smooth returns.",
+        q: "Do you ship internationally?",
+        a: "Yes, we ship to most countries worldwide. Shipping charges and delivery times may vary depending on your location.",
     },
     {
-        q: "How can I get started cryptocurrency mining with EcomineX Hosting?",
-        a: "Choose a site, select machines, sign the hosting agreement, and fund the order. We handle deployment; you track performance in the dashboard.",
+        q: "How long does the shipment take?",
+        a: "Shipment times depend on your location and the shipping method chosen at checkout. Standard delivery typically takes 5-10 business days.",
     },
+    {
+        q: "Will I get a refund on my returned product?",
+        a: "Refunds are issued for returned products in compliance with our return policy. Ensure the product is unused and in its original condition.",
+    },
+     {
+        q: "What is the mode of payment?",
+        a: "We accept various payment modes, including credit/debit cards, PayPal, and other secure payment gateways.",
+    },
+     {
+        q: "Is a warranty available for miners?",
+        a: "Yes, warranties are available for miners. Warranty terms depend on the specific product and manufacturer. Check the product details for more information.",
+    },
+     {
+        q: "What other supporting services do you provide?",
+        a: "We offer setup assistance, repair services, and customer support to ensure you have the best experience with our products.",
+    }
 ];
 
 
@@ -41,14 +57,13 @@ function page() {
   return (
     <div>
       <LandingLayout>
+        <div className="overflow-x-hidden relative bg-[#111111] px-14 pt-6 pb-20 flex flex-col gap-10">
+           <div className='absolute overflow-x-hidden bg-[#22c55e]  blur-[189px] z-999 -top-0 -right-10 h-[160px] w-[160px]'></div>
         <ContactForm />
-        <div className="overflow-hidden relative bg-[#111111] px-14">
           <HomeContactSection />
-          <FAQSection FAQS={FAQS}></FAQSection>
+          <FAQSection faqs={FAQS} heading={'Explore Common Questions'}></FAQSection>
+          <div className='absolute overflow-x-hidden bg-[#22c55e]  blur-[139px] -bottom-0 -right-10 h-[160px] w-[160px]'></div>
         </div>
-        <LocationSection />
-        <FaqSection />
-
       </LandingLayout>
     </div>
   );

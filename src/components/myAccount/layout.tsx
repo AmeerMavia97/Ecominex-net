@@ -117,69 +117,71 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   };
 
   return (
-     <ProtectedRoutes>
+    <ProtectedRoutes>
 
-    
-    <div className="flex min-h-screen flex-col bg-[#000] text-white lg:flex-row">
-      {/* Desktop Sidebar */}
-      <motion.div
-        initial={{ x: -250, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5, type: "spring" }}
-        className="hidden lg:flex lg:w-64 flex-col border-r-2 border-zinc-700 bg-[#000] p-2 backdrop-blur-md"
-      >
-        <Link href="/" className="flex items-center space-x-2 mx-4 my-8">
-          <span className="text-3xl font-bold">Ecomine</span>
-          <div className="flex -ml-2 h-[30px] w-[30px] items-center justify-center rounded-full bg-green-500">
-            <span className="text-xl font-bold">X</span>
-          </div>
-        </Link>
-        <nav className="space-y-3 mt-8">
-          {roleCheck ? navigationLinks.map((item, idx) => (
-            <MenuLink key={idx} {...item} />
-          )) : navigationUser.map((item, idx) => (<MenuLink key={idx} {...item} />))}
-        </nav>
-      </motion.div>
 
-      {/* Logout Modal */}
-      {showLogoutModal && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
+      <div className="flex min-h-screen flex-col bg-[#000] text-white lg:flex-row ">
+        {/* Desktop Sidebar */}
+        <div className="min-h-screen  w-[25%] ">
           <motion.div
-            className="mx-4 w-full max-w-sm rounded-lg border border-zinc-800 bg-zinc-900 p-6"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.3 }}
+            initial={{ x: -250, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5, type: "spring" }}
+            className="hidden lg:flex w-[22%] mb-4 fixed flex-col bg-[#1b1b1b] p-2 backdrop-blur-md min-h-screen" 
           >
-            <h3 className="mb-4 text-xl font-semibold">Confirm Logout</h3>
-            <p className="mb-6 text-zinc-400">Are you sure you want to logout?</p>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={() => setShowLogoutModal(false)}
-                className="rounded-lg bg-zinc-800 px-4 py-2 text-white hover:bg-zinc-700"
-              >
-                No
-              </button>
-              <button
-                onClick={handleAdminLogout}
-                className="bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-white"
-              >
-                Yes
-              </button>
-            </div>
+            <Link href="/" className="flex items-center justify-center space-x-2 mx-4 my-8">
+              <span className="text-3xl font-bold">Ecomine</span>
+              <div className="flex -ml-2 h-[30px] w-[30px] items-center justify-center rounded-full bg-green-500">
+                <span className="text-xl font-bold">X</span>
+              </div>
+            </Link>
+            <nav className="space-y-3 mt-8">
+              {roleCheck ? navigationLinks.map((item, idx) => (
+                <MenuLink key={idx} {...item} />
+              )) : navigationUser.map((item, idx) => (<MenuLink key={idx} {...item} />))}
+            </nav>
           </motion.div>
-        </motion.div>
-      )}
+        </div>
 
-      {/* Main Content */}
-      <div className="flex-1 bg-[#000] pt-16 lg:pt-0">
-        <div className="mx-auto max-w-full p-4">{children}</div>
+        {/* Logout Modal */}
+        {showLogoutModal && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <motion.div
+              className="mx-4 w-full max-w-sm rounded-lg border border-zinc-800 bg-zinc-900 p-6"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 className="mb-4 text-xl font-semibold">Confirm Logout</h3>
+              <p className="mb-6 text-zinc-400">Are you sure you want to logout?</p>
+              <div className="flex justify-end space-x-4">
+                <button
+                  onClick={() => setShowLogoutModal(false)}
+                  className="rounded-lg bg-zinc-800 px-4 py-2 text-white hover:bg-zinc-700"
+                >
+                  No
+                </button>
+                <button
+                  onClick={handleAdminLogout}
+                  className="bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-white"
+                >
+                  Yes
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Main Content */}
+        <div className="flex-1 bg-[#000] pt-16 lg:pt-0">
+          <div className="mx-auto max-w-full p-4">{children}</div>
+        </div>
       </div>
-    </div>
-     </ProtectedRoutes>
+    </ProtectedRoutes>
   );
 };
 

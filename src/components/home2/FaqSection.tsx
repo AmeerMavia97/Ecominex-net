@@ -2,34 +2,14 @@
 
 import { useId, useRef, useState } from "react";
 import Link from "next/link";
+
 type QA = { q: string; a: string };
 
-const FAQS: QA[] = [
-    {
-        q: "What is cryptocurrency mining and how does it work?",
-        a: "Mining secures a blockchain by validating new blocks of transactions. ASIC/GPUs compete to find a cryptographic nonce; the winner adds a block and receives block rewards + fees.",
-    },
-    {
-        q: "How does EcomineX Hosting ensure the security of investments in mining?",
-        a: "Physical access controls, 24/7 monitoring, redundant power, and strict firmware policies. Revenue wallets are non-custodial so you retain control of proceeds.",
-    },
-    {
-        q: "What is the expected return on investment (ROI) from cryptocurrency mining?",
-        a: "ROI depends on hardware efficiency, power rate, network difficulty, price, uptime, and pool fees. We provide per-site calculators with conservative assumptions.",
-    },
-    {
-        q: "What is the minimum investment duration with EcomineX Hosting?",
-        a: "Typical hosting terms range 6–12 months; earlier exits are possible subject to de-rack and logistics fees.",
-    },
-    {
-        q: "Is it still profitable to mine cryptocurrencies today?",
-        a: "With efficient hardware and competitive electricity, yes—though profitability is volatile. Hedging and smart curtailment strategies help smooth returns.",
-    },
-    {
-        q: "How can I get started cryptocurrency mining with EcomineX Hosting?",
-        a: "Choose a site, select machines, sign the hosting agreement, and fund the order. We handle deployment; you track performance in the dashboard.",
-    },
-];
+type FAQSectionProps = {
+  faqs: QA[];
+  
+  heading: string;
+};
 
 function Item({ qa }: { qa: QA }) {
     const [open, setOpen] = useState(false);
@@ -87,9 +67,9 @@ function Item({ qa }: { qa: QA }) {
     );
 }
 
-export default function FAQSection() {
-    const left = FAQS.filter((_, i) => i % 2 === 0);
-    const right = FAQS.filter((_, i) => i % 2 === 1);
+export default function FAQSection({ faqs , heading }: FAQSectionProps ) {
+    const left = faqs.filter((_, i) => i % 2 === 0);
+    const right = faqs.filter((_, i) => i % 2 === 1);
 
     return (
         <section className="w-full bg-[#111111] pb-16 relative">
@@ -99,18 +79,18 @@ export default function FAQSection() {
                 <div className="mb-10 flex items-center justify-between gap-6">
                     <div>
                         <h1 className="text-white font-[600] text-[44px] leading-[53px]">
-                            <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"> FAQs</span>
+                            <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"> {heading}</span>
                         </h1>
                         <p className="mt-2 text-[14px] w-[75%] text-gray-300">Find the most frequently asked questions about bitcoin mining and our hosting.</p>
                     </div>
-                    <Link href="/contactUs">
+                    {heading === "FAQs" &&  <Link href="/contactUs">
                         <button className="font-semibold border px-6 py-2.5 text-[13.5px] rounded-full border-green-500 text-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all duration-300">
                             Learn More
                         </button>
-                    </Link>
+                    </Link>}
+                    
 
                 </div>
-
                 {/* two columns */}
                 <div className="grid grid-cols-1 gap-20 lg:grid-cols-2">
                     <div role="list" className="space-y-6">

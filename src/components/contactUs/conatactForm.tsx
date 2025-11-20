@@ -44,11 +44,16 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
     : `${calendlyUrl}?primary_color=20e202`;
 
   return (
-    <div className="mx-auto max-w-7xl bg-[#101010] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-      <div className="mx-auto max-w-2xl lg:max-w-4xl">
-        <div className="mb-12 text-center">
-          <h2 className="mb-4 text-4xl font-extrabold text-white">{title}</h2>
-          <p className="text-lg text-gray-400">{subtitle}</p>
+    <div className="mx-auto max-w-8xl bg-[#101010] px-4 pt-16 sm:px-6 lg:px-8 lg:pt-20 relative overflow-x-hidden">
+
+
+      <div className="mx-auto max-w-2xl lg:max-w-6xl">
+
+        <div className="flex flex-col justify-center items-center pb-7">
+          <h1 className="text-white font-[600] text-[44px] text-center leading-[53px]">{title}
+            <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"> </span>
+          </h1>
+          <p className="mt-2 text-[14px] w-[75%] text-center text-gray-300">{subtitle}</p>
         </div>
 
         <div className="rounded-2xl border border-gray-800 bg-[#1E1E1E] p-8 shadow-2xl">
@@ -74,7 +79,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({
             }}
           />
 
-          <div className="mt-6 text-center">
+          <div className="mt-0 text-center">
             <p className="text-sm text-gray-500">
               By scheduling a meeting, you agree to our terms of service and
               privacy policy.
