@@ -84,7 +84,7 @@ const AboutUs: React.FC<AboutUsProps> = ({
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 place-items-center">
         {/* Left: Text Content */}
-        <article className="flex flex-col gap-6 text-white relative z-50">
+        <article className="flex flex-col gap-4 text-white relative z-50">
           <div className="flex relative -mb-3">
             <div className="text-transparent z-10 -mr-10 border-[2px] border-white px-4 rounded-full py-0">.</div>
             <div className="text-transparent ml-5 z-20 bg-green-600 px-5 py-5 rounded-full"></div>
@@ -110,7 +110,7 @@ const AboutUs: React.FC<AboutUsProps> = ({
           {paragraphs.map((p, idx) => (
             <p
               key={idx}
-              className="text-[16px] leading-[24px] w-[90%] text-gray-300"
+              className="text-[14.5px] leading-[24px] w-[90%] text-gray-300"
             >
               {p}
             </p>

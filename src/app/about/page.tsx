@@ -5,13 +5,13 @@ import ModernAboutSegments from "@/components/home/Segments";
 import LandingLayout from "@/components/Layouts/LandingLayout";
 import HeroAbout from "@/components/About/HeroAbout"
 import AboutSection from "@/components/home2/AboutUs"
-import OurFeature from "@/components/About/OurFeature"
 import AboutSegment from "@/components/About/AboutSegment"
 import HomeAboutImage from "@/../../public/AboutUS.jpg"
 import segmentImg from "@/../../public/mining-crypto.jpg"
 import AboutCounter from "@/components/About/AboutCounter"
 
 import React from "react";
+import OurFeature from "@/components/About/OurFeature";
 
 const paragraphss = [
   "Your Gateway to Crypto Mining Success",

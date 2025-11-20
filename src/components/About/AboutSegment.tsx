@@ -76,75 +76,79 @@ const AboutSegment: React.FC<AboutSegmentProps> = ({
   const { ref, y } = useParallaxFast(260, 0.5);
 
   return (
-    <section id={id} ref={ref} className="w-full bg-[#101010] p-20 relative overflow-hidden">
-      {/* Top green blur */}
-      <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] -right-10 h-[180px] w-[180px]" />
+    <>
+      <div className="relative  py-20">
+        <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] z-50 -top-10  -right-16 h-[180px] w-[180px]" />
+      <section id={id} ref={ref} className="w-full bg-[#101010] pl-20 pr-16 relative o">
+        {/* Top green blur */}
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 place-items-center relative z-10">
-        {/* Left: Parallax Image */}
-        <div className="relative h-[500px] w-full overflow-hidden rounded-[10px] border border-white/10">
-          <div className="pointer-events-none absolute inset-0 z-10 bg-black/20" />
-          <div
-            className="absolute inset-0 will-change-transform"
-            style={{
-              transform: `translate3d(0, ${y}px, 0) scale(1.80)`,
-              backgroundImage: `url('${image}')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
-        </div>
 
-        {/* Right: Text content */}
-        <article className="flex flex-col gap-6 text-white relative z-20">
-          <div className="flex relative -mb-3">
-            <div className="text-transparent z-10 -mr-10 border-[2px] border-white px-4 rounded-full py-0">.</div>
-            <div className="text-transparent ml-5 z-20 bg-green-600 px-5 py-5 rounded-full"></div>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 place-items-center relative z-10">
+          {/* Left: Parallax Image */}
+          <div className="relative h-[460px] overflow-hidden rounded-[10px] border border-white/10 w-[95%]">
+            <div className="pointer-events-none absolute inset-0 z-10 bg-black/20" />
+            <div
+              className="absolute inset-0 will-change-transform "
+              style={{
+                transform: `translate3d(0, ${y}px, 0) scale(1.80)`,
+                backgroundImage: `url('${image}')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            />
           </div>
 
-          {/* Highlighted Title */}
-          <h1 className="font-[600] text-[44px] leading-[53px] w-[80%]">
-            {title.split(new RegExp(`(${highlight})`, "gi")).map((part, idx) =>
-              part.toLowerCase() === highlight.toLowerCase() ? (
-                <span
-                  key={idx}
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-500 font-bold"
-                >
-                  {part}
-                </span>
-              ) : (
-                <span key={idx}>{part}</span>
-              )
-            )}
-          </h1>
-
-          {/* Paragraphs */}
-          {paragraphs.map((p, idx) => (
-            <p
-              key={idx}
-              className={`text-[16px] leading-[24px] w-[90%] text-gray-300 ${
-                idx === 0 ? "font-semibold text-white" : ""
-              }`}
-            >
-              {p}
-            </p>
-          ))}
-
-          {/* Optional Button */}
-          {buttonText && (
-            <div className="mt-2">
-              <button className="!font-semibold border-[1px] px-7 py-3 text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-black transition-all">
-                {buttonText}
-              </button>
+          {/* Right: Text content */}
+          <article className="flex flex-col gap-5 text-white relative z-50 pl-10">
+            <div className="flex relative -mb-3">
+              <div className="text-transparent z-10 -mr-10 border-[2px] border-white px-4 rounded-full py-0">.</div>
+              <div className="text-transparent ml-5 z-20 bg-green-600 px-5 py-5 rounded-full"></div>
             </div>
-          )}
-        </article>
-      </div>
 
-      {/* Bottom green blur */}
-      <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] -bottom-20 -left-10 h-[100px] w-[110px]" />
-    </section>
+            {/* Highlighted Title */}
+            <h1 className="font-[600] text-[42px] leading-[53px] w-[80%]">
+              {title.split(new RegExp(`(${highlight})`, "gi")).map((part, idx) =>
+                part.toLowerCase() === highlight.toLowerCase() ? (
+                  <span
+                    key={idx}
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-500 font-bold"
+                  >
+                    {part}
+                  </span>
+                ) : (
+                  <span key={idx}>{part}</span>
+                )
+              )}
+            </h1>
+
+            {/* Paragraphs */}
+            {paragraphs.map((p, idx) => (
+              <p
+                key={idx}
+                className={`text-[15px] leading-[23px] w-[90%] text-gray-300 ${idx === 0 ? "font-semibold text-white" : ""
+                  }`}
+              >
+                {p}
+              </p>
+            ))}
+
+            {/* Optional Button */}
+            {buttonText && (
+              <div className="mt-2">
+                <button className="!font-semibold border-[1px] px-7 py-3 text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-black transition-all">
+                  {buttonText}
+                </button>
+              </div>
+            )}
+          </article>
+        </div>
+
+        {/* Bottom green blur */}
+        <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] -bottom-20 -left-10 h-[100px] w-[110px]" />
+      </section>
+      </div>
+      </>
   );
 }
 

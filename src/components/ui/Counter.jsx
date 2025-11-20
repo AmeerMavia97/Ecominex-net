@@ -15,7 +15,7 @@ export default function CounterSection() {
   ];
 
   return (
-    <section ref={ref} className="bg-[#101010] pb-20 text-white">
+    <section ref={ref} className="bg-[#101010] pb-14 text-white">
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6">
         {stats.map((item, i) => (
           <div
@@ -23,7 +23,7 @@ export default function CounterSection() {
             className="flex flex-col items-center justify-center p-10 border border-white/10 rounded-xl bg-[#111111] hover:bg-[#161616] transition-all duration-300"
           >
             {/* Icon */}
-            <div className="text-white mb-6">{item.icon}</div>
+            <div className="text-white mb-4">{item.icon}</div>
 
             {/* Number */}
             <h2
@@ -46,7 +46,7 @@ export default function CounterSection() {
 
       {/* ✳️ Extra Text After Counters */}
       <div className="max-w-3xl mx-auto text-center mt-12 px-6">
-        <p className="text-gray-400 text-lg leading-relaxed">
+        <p className="text-gray-200 text-lg leading-relaxed">
           We help you set up the infrastructure, IoT-based controls, and maintenance.{" "}
           We can even talk to you about risk management and hedging.
         </p>

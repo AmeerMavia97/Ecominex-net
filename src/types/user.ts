@@ -42,9 +42,9 @@ export interface Referral {
   firstName: string;
   lastName: string;
   email: string;
-  createdAt: string;      // ISO date string
-  deposit_count: number;  // number of deposits
-  discount: string;       // discount percentage in string
+  createdAt: string;      
+  deposit_count: number; 
+  discount: string;       
 }
 
 export interface ReferralResponse {
