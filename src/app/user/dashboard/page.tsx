@@ -15,6 +15,27 @@ import { AppDispatch, RootState } from '@/lib/store/store';
 import { useSelector, useDispatch } from "react-redux";
 import { requestWithdrawal } from "@/lib/feature/withdraw/withdrawalSlice";
 import "react-toastify/dist/ReactToastify.css";
+
+interface UserBalance {
+  balances: {
+    adminAdd: number;
+    mining: number;
+    total: number;
+  };
+  lastUpdated: string;
+  machines: {
+    count: number;
+    details: any[];
+  };
+}
+interface Referral {
+  id: string;
+  discount: number;
+  referralStatus: "active" | "inactive"; 
+}
+
+
+
 export default function Dashboard() {
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawAddress, setWithdrawAddress] = useState("");
@@ -28,6 +49,8 @@ export default function Dashboard() {
   const { userBalance, loading: balanceLoading } = useSelector(
     (state: RootState) => state.balance
   );
+
+
 
   const { userMachines } = useSelector((state: RootState) => state.userMachine);
   const { withdrawals, isLoading: withdrawalsLoading, error: withdrawalsError } = useSelector(
@@ -144,13 +167,19 @@ export default function Dashboard() {
   console.log(referralData)
   console.log("userProfit:", userProfit);
 
+  function hasBalances(obj: any): obj is { balances: { total: number } } {
+  return obj && obj.balances !== undefined;
+}
+
+// Usage
+const totalBalance = hasBalances(userBalance) ? userBalance.balances.total : 0;
+
   const stats = [
     {
       title: "Total Balance",
-      value: balanceLoading
+      value: balanceLoading || !userBalance
         ? "Loading..."
-        : `$${Number(userBalance?.balances.total ?? 0).toLocaleString()}`,
-
+        : `$${Number(totalBalance ).toLocaleString()}`,
       icon: DollarSign,
       gradient: "bg-green-600",
     },
@@ -159,53 +188,53 @@ export default function Dashboard() {
       value: balanceLoading || !userMachines
         ? "Loading..."
         : `${userMachines.filter((m) => m.status?.toLowerCase() === "active").length}`,
-
       icon: Server,
       gradient: "bg-green-600",
     },
-
     {
       title: "Profit Earned",
       value: profitLoading
         ? "Loading..."
-        : `$${(referralData?.reduce((sum, r) => sum + Number(r.discount || 0), 0) || 0).toFixed(2)}`,
-
+        : `$${(referralData?.reduce((sum, r) => sum + Number(r.discount || 0), 0) ?? 0).toFixed(2)}`,
       icon: TrendingUp,
       gradient: "bg-green-600",
     },
     {
       title: "Referrals",
-      value: loading ? "Loading..." 
-      : `${referralData.filter((ref) => ref.referralStatus === "active").length}`,
+      value: loading
+        ? "Loading..."
+        : `${referralData?.filter((ref) => ref.referralStatus === "active").length ?? 0}`,
       icon: Users,
       gradient: "bg-green-600",
-    }
+    },
   ];
 
+
+
   return (
-    <div className="space-y-6  min-h-screen p-4 md:p-6" style={{backgroundColor:"#000000"}}>
+    <div className="space-y-6  min-h-screen p-4 md:p-6" style={{ backgroundColor: "#000000" }}>
       <ToastContainer position="top-right" autoClose={3000} theme="dark" />
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
         {/* Title & Subtitle */}
         <div>
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#22c55e]">
-           Welcome Back {user ? `${user.firstName} ${user.lastName}` : " Dashboard"}
+            Welcome Back {user ? `${user.firstName} ${user.lastName}` : " Dashboard"}
           </h2>
           <p className="text-sm md:text-base text-slate-400 mt-1">
-              Your Mining Dashboard
+            Your Mining Dashboard
           </p>
         </div>
         <div className="flex gap-2">
           <Dialog open={isDepositOpen} onOpenChange={setIsDepositOpen}>
             <DialogTrigger asChild>
-              <Button className="text-white" style={{backgroundColor:"#22c55e"}}>
+              <Button className="text-white" style={{ backgroundColor: "#22c55e" }}>
                 <ArrowDownToLine className="mr-2 h-4 w-4" />
                 Deposit
               </Button>
             </DialogTrigger>
 
-            <DialogContent className=" border-slate-700 max-w-md"style={{backgroundColor:"#000000"}}>
+            <DialogContent className=" border-slate-700 max-w-md" style={{ backgroundColor: "#000000" }}>
               <DialogHeader>
                 <DialogTitle className="text-white text-xl font-semibold">
                   Deposit Funds
@@ -228,7 +257,7 @@ export default function Dashboard() {
                     onClick={() => setDepositNetwork("ERC20")}
                     className={`cursor-pointer rounded-lg border p-4  hover:bg-slate-800 transition text-center
           ${depositNetwork === "ERC20" ? "border-green-500" : "border-slate-700"}`}
-                  style={{backgroundColor:"#1b1b1b"}}>
+                    style={{ backgroundColor: "#1b1b1b" }}>
                     <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" className="w-12 h-12 mx-auto" />
                     <p className="text-white font-semibold mt-2">Ethereum</p>
                     <p className="text-slate-400 text-xs">ERC 20</p>
@@ -239,7 +268,7 @@ export default function Dashboard() {
                     onClick={() => setDepositNetwork("TRC20")}
                     className={`cursor-pointer rounded-lg border p-4 bg-slate-800/40 hover:bg-slate-800 transition text-center
           ${depositNetwork === "TRC20" ? "border-green-500" : "border-slate-700"}`}
-          style={{backgroundColor:"#1b1b1b"}}
+                    style={{ backgroundColor: "#1b1b1b" }}
                   >
                     <img src="https://cryptologos.cc/logos/tron-trx-logo.png" className="w-12 h-12 mx-auto" />
                     <p className="text-white font-semibold mt-2">TRON</p>
@@ -303,7 +332,7 @@ export default function Dashboard() {
               </Button>
             </DialogTrigger>
 
-            <DialogContent className="border-slate-700"style={{backgroundColor:"#000000"}}>
+            <DialogContent className="border-slate-700" style={{ backgroundColor: "#000000" }}>
               <DialogHeader>
                 <DialogTitle className="text-white text-2xl font-semibold">
                   Withdraw Funds
@@ -321,7 +350,7 @@ export default function Dashboard() {
                   value={withdrawAmount}
                   onChange={(e) => setWithdrawAmount(e.target.value)}
                   className="text-white"
-                  style={{backgroundColor:"#1b1b1b"}}
+                  style={{ backgroundColor: "#1b1b1b" }}
                   placeholder="50.00"
                 />
 
@@ -337,7 +366,7 @@ export default function Dashboard() {
                       onClick={() => setWithdrawNetwork("ERC20")}
                       className={`cursor-pointer rounded-xl border p-5  hover:bg-slate-800 transition 
             ${withdrawNetwork === "ERC20" ? "border-green-500" : "border-slate-700"}`}
-                    style={{backgroundColor:"#1b1b1b"}}
+                      style={{ backgroundColor: "#1b1b1b" }}
                     >
                       <div className="flex flex-col items-center gap-3">
                         <img
@@ -354,7 +383,7 @@ export default function Dashboard() {
                       onClick={() => setWithdrawNetwork("TRC20")}
                       className={`cursor-pointer rounded-xl border p-5  hover:bg-slate-800 transition 
             ${withdrawNetwork === "TRC20" ? "border-green-500" : "border-slate-700"}`}
-                    style={{backgroundColor:"#1b1b1b"}}
+                      style={{ backgroundColor: "#1b1b1b" }}
                     >
                       <div className="flex flex-col items-center gap-3">
                         <img
@@ -375,12 +404,12 @@ export default function Dashboard() {
                   onChange={(e) => setWithdrawAddress(e.target.value)}
                   className="bg-slate-800 text-white"
                   placeholder="Enter address"
-                  style={{backgroundColor:"#1b1b1b"}}
+                  style={{ backgroundColor: "#1b1b1b" }}
                 />
 
                 <Button
                   onClick={handleWithdrawrequest}
-                  className="w-full bg-red-600 text-white text-lg py-3" style={{backgroundColor:"#22c55e"}}
+                  className="w-full bg-red-600 text-white text-lg py-3" style={{ backgroundColor: "#22c55e" }}
                 >
                   Submit Withdrawal
                 </Button>
@@ -392,7 +421,7 @@ export default function Dashboard() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
-          <Card key={stat.title} className="border-slate-700/50 shadow-lg" style={{backgroundColor:"#1b1b1b"}}>
+          <Card key={stat.title} className="border-slate-700/50 shadow-lg" style={{ backgroundColor: "#1b1b1b" }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-slate-400">{stat.title}</CardTitle>
               <div className={`${stat.gradient} p-2 rounded-lg`}>
@@ -407,7 +436,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <Card className=" border-slate-700/50 shadow-lg" style={{backgroundColor:"#1b1b1b"}}>
+      <Card className=" border-slate-700/50 shadow-lg" style={{ backgroundColor: "#1b1b1b" }}>
         <CardHeader>
           <CardTitle className="text-white">Recent Activity</CardTitle>
         </CardHeader>
