@@ -1,7 +1,9 @@
 // types/userMachine.ts
 export interface UserMachine {
   _id: string;
+  
   user: {
+
     _id: string;
     firstName: string;
     lastName: string;

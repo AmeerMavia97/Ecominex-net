@@ -17,6 +17,7 @@ interface ShareMachine {
   priceRange: number;
   coinsMined: string;
   monthlyProfit: number;
+  soldShares: number;  
   totalProfitEarned: number;
 
 }

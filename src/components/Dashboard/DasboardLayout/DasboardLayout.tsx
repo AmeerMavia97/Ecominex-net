@@ -117,7 +117,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         );
     };
 
-       if (isAuthenticated && user.role !== "admin") {
+       if (isAuthenticated && user?.role !== "admin") {
         return (
             <div className="flex justify-center items-center min-h-screen bg-transparent">
                 <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>

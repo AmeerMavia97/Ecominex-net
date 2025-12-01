@@ -58,16 +58,15 @@ export default function UsersTable() {
   // Map remote users with safe name
   useEffect(() => {
     if (Array.isArray(remoteUsers)) {
-     const res = remoteUsers.map((u) => ({
-          ...u,
-          name:
-            u.name ??
-            // [u.firstName ?? "", u.lastName ?? ""].filter(Boolean).join(" ") ??
-            "Unknown User",
-        }))
-      setUsers(res)
+      const res: UserData[] = remoteUsers.map((u) => ({
+        ...u,
+        name: u.name ?? "Unknown User",
+        createdAt: u.createdAt ? new Date(u.createdAt).toISOString() : undefined, // <-- convert Date to string
+      }));
+      setUsers(res);
     }
   }, [remoteUsers]);
+
 
   // Filter & sort
   const filtered = useMemo(() => {
@@ -196,7 +195,8 @@ export default function UsersTable() {
   const handleViewDetails = async (user: UserData) => {
     if (!user._id) return;
     try {
-      await dispatch(getContactById(user._id) as any);
+      if (!user._id) return;
+      await dispatch(deleteContact(String(user._id)) as any);
       const fullUser = users.find((u) => getUid(u) === getUid(user)) || user;
       setViewUser(fullUser);
       setIsViewModalOpen(true);
@@ -221,12 +221,12 @@ export default function UsersTable() {
 
 
   if (isLoading) {
-        return (
-            <div className="flex justify-center items-center min-h-screen bg-transparent">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
-            </div>
-        );
-    }
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-transparent">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
+      </div>
+    );
+  }
 
 
   return (
@@ -439,9 +439,8 @@ export default function UsersTable() {
             <button
               key={i}
               onClick={() => goToPage(i + 1)}
-              className={`px-3.5 py-1.5 text-[14px] border border-gray-300 rounded ${
-                currentPage === i + 1 ? "border-green-500 text-green-500" : ""
-              }`}
+              className={`px-3.5 py-1.5 text-[14px] border border-gray-300 rounded ${currentPage === i + 1 ? "border-green-500 text-green-500" : ""
+                }`}
             >
               {i + 1}
             </button>

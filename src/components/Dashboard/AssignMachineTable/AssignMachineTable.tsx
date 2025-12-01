@@ -7,19 +7,44 @@ import { useAppDispatch } from "@/lib/store/reduxHooks";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-export interface UserMachine {
+interface UserMachine {
   _id: string;
-  createdAt?: string;
-  status?: string;
-  machine?: { machineName?: string };
-  user?: { email?: string; firstName?: string; lastName?: string };
-  images?: string[];
-  monthlyProfit?: number;
+  createdAt: string;
+  status: "active" | "inactive";
+  machine: { machineName?: string };
+  user?: {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+  };
+  images: string[];
+  monthlyProfit: number;
   machineName: string;
   userName: string;
   date: string;
   monthlyProfitAccumulated: number;
 }
+
+
+
+interface ApiUserMachine {
+  _id: string;
+  createdAt?: string;
+  status?: "active" | "inactive";
+  machine: string | { machineName?: string }; // backend might send string or object
+  user?: {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+  };
+  images?: string[];
+  monthlyProfit?: number;
+  machineName?: string;
+  userName?: string;
+  date?: string;
+  monthlyProfitAccumulated?: number;
+}
+
 
 export default function AssignedMachinesTable() {
   const dispatch = useAppDispatch();
@@ -47,23 +72,34 @@ export default function AssignedMachinesTable() {
     const loadUserMachines = async () => {
       try {
         setIsLoading(true);
-        const res = await dispatch(fetchAllUserMachines()).unwrap();
+        // const res = await dispatch(fetchAllUserMachines()).unwrap();
+
+        const res: ApiUserMachine[] = await dispatch(fetchAllUserMachines()).unwrap() as ApiUserMachine[];
+
 
         const data: UserMachine[] = Array.isArray(res)
-          ? res.map((item) => ({
+          ? res.map((item) => {
+            const normalizedMachine = typeof item.machine === "string"
+              ? { machineName: item.machine }
+              : item.machine ?? {};
+
+            return {
               _id: item._id,
-              createdAt: item.createdAt,
-              status: item.status,
-              machine: item.machine,
+              createdAt: item.createdAt ?? "",
+              status: item.status ?? "inactive",
+              machine: normalizedMachine,
               user: item.user,
               images: item.images ?? [],
               monthlyProfit: item.monthlyProfit ?? 0,
-              machineName: item.machineName ?? "",
-              userName: item.userName ?? "",
+              machineName: item.machineName ?? normalizedMachine.machineName ?? "",
+              userName: item.userName ?? `${item.user?.firstName ?? ""} ${item.user?.lastName ?? ""}`,
               date: item.date ?? "",
               monthlyProfitAccumulated: item.monthlyProfitAccumulated ?? 0,
-            }))
+            };
+          })
           : [];
+
+
 
         setUserMachines(data);
         setError(null);
@@ -176,7 +212,7 @@ export default function AssignedMachinesTable() {
       confirmButtonText: "Delete All",
     });
 
-     if (!result.isConfirmed) return;
+    if (!result.isConfirmed) return;
 
     try {
       await dispatch(removeUserMachine(userMachineId)).unwrap();
@@ -379,9 +415,8 @@ export default function AssignedMachinesTable() {
                 {/* STATUS */}
                 <td className="py-4 text-center">
                   <span
-                    className={`px-2 py-1 rounded-full text-[13px] ${
-                      (item.status ?? "").toLowerCase() === "active" ? "bg-green-800/40 text-green-400" : "bg-[#66000095] text-red"
-                    }`}
+                    className={`px-2 py-1 rounded-full text-[13px] ${(item.status ?? "").toLowerCase() === "active" ? "bg-green-800/40 text-green-400" : "bg-[#66000095] text-red"
+                      }`}
                   >
                     {item.status ?? "-"}
                   </span>

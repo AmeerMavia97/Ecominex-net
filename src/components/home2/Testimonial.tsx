@@ -18,7 +18,7 @@ const ITEMS: Testimonial[] = [
         name: "Paul Bouvil",
         first: "Paul",
         last: "Bouvil",
-        avatar: Testimon1,
+        avatar: "/Testi1.jpg",
         text:
             "Top customer service! I was able to mine my first BTC quickly thanks to their advice and expertise. A company you can trust!",
         stars: 5,

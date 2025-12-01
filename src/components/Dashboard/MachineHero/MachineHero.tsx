@@ -38,9 +38,7 @@ interface SelectedMachineType {
     name: string;
     id: string;
 }
-interface ProductsResponse {
-  data: MiningMachine[]; 
-}
+
 
 export default function MachineHero() {
 
@@ -95,11 +93,11 @@ export default function MachineHero() {
                     "getAllMiningMachines",
                     undefined,
                     (draft) => {
-                        if (!draft?.data) return;
-                        draft.data = draft.data.filter((m) => m._id !== machineId);
+                        return draft.filter((m) => m._id !== machineId);
                     }
                 )
             );
+
 
             setLocalMachines(prev => prev.filter(m => m._id !== machineId));
             toast.success(`Machine "${machineName}" deleted successfully`);
@@ -110,7 +108,7 @@ export default function MachineHero() {
         }
     };
 
-     if (machinesLoading) {
+    if (machinesLoading) {
         return (
             <div className="flex justify-center items-center min-h-screen bg-transparent">
                 <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>

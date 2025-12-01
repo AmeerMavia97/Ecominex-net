@@ -7,6 +7,8 @@ export interface UserMachine {
   assignedDate: Date;
   monthlyProfitAccumulated: number;
   status: "active" | "inactive";
+  machineName: string;
+  priceRange: number;
 }
 
 

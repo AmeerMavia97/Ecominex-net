@@ -7,6 +7,8 @@ export interface User {
   role: 'user' | 'admin';
   phoneNumber:string;
   mainBalance:string;
+    referralCode?: string;
+
 }
 
 export interface VerifyOtp {
@@ -44,6 +46,8 @@ export interface Referral {
   email: string;
   createdAt: string;      
   deposit_count: number; 
+  referralStatus: "active" | "inactive" | string; // <- define possible values
+
   discount: string;       
 }
 
