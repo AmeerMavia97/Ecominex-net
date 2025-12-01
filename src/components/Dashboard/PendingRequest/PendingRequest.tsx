@@ -173,7 +173,7 @@ export default function PendingRequest({
       ) : !pendingWithdrawals.length ? (
         <p className="text-center text-gray-400 py-10">No pending withdrawals available.</p>
       ) : !filteredData.length ? (
-        <p className="text-center text-gray-400 py-10">No results found for "{search}"</p>
+        <p className="text-center text-gray-400 py-10">No results found for {search}</p>
       ) : (
         <table className="w-full text-sm">
           <thead>

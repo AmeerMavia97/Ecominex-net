@@ -110,7 +110,7 @@ export default function ResetPasswordPage() {
             <h1 className="text-[#f0f0f0] font-[500] text-[33px]">Check your email</h1>
             <div>
               <p className="text-[#dcdcdc] text-[15px] mt-1">
-                If an account exists, you'll receive an email with a reset link.
+                If an account exists, you&apos;ll receive an email with a reset link.
               </p>
               <p className="text-[#dcdcdc] text-[15px] mt-3">
                 Check your inbox and follow the password reset link.
