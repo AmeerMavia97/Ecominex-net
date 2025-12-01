@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Testimon1 from '../../../public/Testi1.jpg'
 
 type Testimonial = {
     name: string;
@@ -17,7 +18,7 @@ const ITEMS: Testimonial[] = [
         name: "Paul Bouvil",
         first: "Paul",
         last: "Bouvil",
-        avatar: "/Testi1.jpg",
+        avatar: Testimon1,
         text:
             "Top customer service! I was able to mine my first BTC quickly thanks to their advice and expertise. A company you can trust!",
         stars: 5,
@@ -26,7 +27,7 @@ const ITEMS: Testimonial[] = [
         name: "Patrick Stone",
         first: "Patrick",
         last: "Stone",
-        avatar: "/Testi2.jpg",
+        avatar: "/Testi2.webp",
         text:
             "I've bought all my miners with them and never experienced any problem. The logistic and shipping was fast.",
         stars: 5,
