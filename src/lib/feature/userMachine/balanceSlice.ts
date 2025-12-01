@@ -54,6 +54,17 @@ interface ProcessWithdrawalPayload {
   adminComment?: string;
 }
 
+
+interface Stats {
+  totalUsers: number;
+  totalMining: number;
+  totalProfit: number;
+  lastUpdated: string;
+  [key: string]: any;
+}
+
+
+
 // Async Thunks
 export const getUserBalance = createAsyncThunk(
   'balance/getUserBalance',
@@ -117,11 +128,29 @@ export const getTransactions = createAsyncThunk(
   }
 );
 
+
+
+export const getStats = createAsyncThunk(
+  'balance/getStats',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get('/api/v1/stats');
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch stats');
+    }
+  }
+);
+
+
+
+
 interface BalanceState {
   userBalance: BalanceWithMachines | null;
   lastTransaction: Transaction | null;
   transactions: Transaction[];
   loading: boolean;
+  stats: Stats | null;
   error: string | null;
   pendingWithdrawals: Transaction[];
 }
@@ -131,6 +160,7 @@ const initialState: BalanceState = {
   lastTransaction: null,
   transactions: [],
   loading: false,
+  stats: null,
   error: null,
   pendingWithdrawals: []
 };
@@ -172,8 +202,8 @@ const balanceSlice = createSlice({
             ...action.payload.balances
           };
         }
-        if (action.payload.transaction.type === 'withdrawal' && 
-            action.payload.transaction.status === 'pending') {
+        if (action.payload.transaction.type === 'withdrawal' &&
+          action.payload.transaction.status === 'pending') {
           state.pendingWithdrawals = [
             ...state.pendingWithdrawals,
             action.payload.transaction
@@ -203,6 +233,18 @@ const balanceSlice = createSlice({
         state.error = null;
       })
       .addCase(processWithdrawal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getStats.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getStats.fulfilled, (state, action) => {
+        state.loading = false;
+        state.stats = action.payload;
+        state.error = null;
+      })
+      .addCase(getStats.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

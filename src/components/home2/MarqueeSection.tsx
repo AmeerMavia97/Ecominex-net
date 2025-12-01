@@ -17,7 +17,7 @@ export default function MarqueeSection() {
 
 
             <div className=' text-white'>
-                <h1 className='font-[600] text-[25px]'>Our World&apos;s <span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Most Average</span> Partners</h1>
+                <h1 className='font-[700] text-[25px]'>Our World&apos;s <span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Most Average</span> Partners</h1>
             </div>
 
             {/* Marquee */}

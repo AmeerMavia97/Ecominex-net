@@ -2,9 +2,9 @@ import React from "react";
 import FAQSection from "@/components/home2/FaqSection";
 import LocationSection from "@/components/contactUs/Map";
 import FaqSection from "@/components/contactUs/FaqSection";
-import ContactForm from "@/components/contactUs/conatactForm";
 import LandingLayout from "@/components/Layouts/LandingLayout";
 import HomeContactSection from "@/components/home2/ContactSection";
+import ContactForm from "@/components/contactUs/contactForm";
 
 type QA = { q: string; a: string };
 
@@ -59,8 +59,7 @@ function page() {
       <LandingLayout>
         <div className="overflow-x-hidden relative bg-[#111111] px-14 pt-6 pb-20 flex flex-col gap-10">
            <div className='absolute overflow-x-hidden bg-[#22c55e]  blur-[189px] z-999 -top-0 -right-10 h-[160px] w-[160px]'></div>
-        <ContactForm />
-          <HomeContactSection />
+          <ContactForm />
           <FAQSection faqs={FAQS} heading={'Explore Common Questions'}></FAQSection>
           <div className='absolute overflow-x-hidden bg-[#22c55e]  blur-[139px] -bottom-0 -right-10 h-[160px] w-[160px]'></div>
         </div>

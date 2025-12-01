@@ -1,20 +1,20 @@
-import AdminTransactionsPage from '@/components/AllProduct/AllTransaction'
-import AdminUsersPage from '@/components/AllProduct/AllUser'
-import AdminProductTable from '@/components/AllProduct/ProductTable'
-import DefaultLayout from '@/components/Layouts/DefaultLayout'
-import LandingLayout from '@/components/Layouts/LandingLayout'
-import DashboardLayout from '@/components/myAccount/layout'
 import React from 'react'
+import DashboardLayout from '@/components/Dashboard/DasboardLayout/DasboardLayout'
+import DashboardHeader from '@/components/Dashboard/DashboardHeader/DashboardHeader'
+import Transactions from '@/components/Dashboard/Transactions/Transactions'
+import ProtectedRoutes from '@/components/config/protectedRoute/ProtectedRoutes'
 
 function page() {
   return (
-    <div>
-      {/* <LandingLayout> */}
-      <DashboardLayout>
-        <AdminTransactionsPage/>
-       </DashboardLayout> 
-      {/* </LandingLayout> */}
-    </div>
+
+    <ProtectedRoutes>
+      <div>
+        <DashboardLayout>
+          <DashboardHeader title="Withdrawal Management" />
+          <Transactions />
+        </DashboardLayout>
+      </div>
+    </ProtectedRoutes>
   )
 }
 

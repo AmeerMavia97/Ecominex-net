@@ -27,6 +27,7 @@ const Shop: React.FC<ShopProps> = ({
   isHomePage = false,
   initialProductCount = 6,
 }) => {
+  
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
   const { data: productsResponse, isLoading, isError } = useGetAllMiningMachinesQuery();

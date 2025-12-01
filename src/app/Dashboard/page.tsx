@@ -1,22 +1,26 @@
 import LandingLayout from '@/components/Layouts/LandingLayout'
 import AssigMachineUser from '@/components/myAccount/assignProfile'
-import DashboardHero from '@/components/myAccount/Hero'
+// import DashboardHero from '@/components/myAccount/Hero'
 import { AdminNavbar } from '@/components/AdminNavbar'
-import DashboardHeader from '@/components/Layouts/DashboardHeader'
 import ProtectedRoutes from '@/components/config/protectedRoute/ProtectedRoutes'
 import React from 'react'
 import DashboardLayout from '@/components/Dashboard/DasboardLayout/DasboardLayout'
+import DashboardHeader from '@/components/Dashboard/DashboardHeader/DashboardHeader'
+import DashboardHero from '@/components/Dashboard/DashboardHero/DashboardHero'
+import { AdminRoute } from '@/components/adminRoute'
 
 function Page() {
   return (
-    <div>
-     
+
+    <ProtectedRoutes>
+      <div>
         <DashboardLayout>
-          <DashboardHeader />
+          <DashboardHeader title={"Admin Dashboard!"} desc={"Track your activity and manage your account settings from your personalized dashboard."} />
           <DashboardHero />
         </DashboardLayout>
-     
-    </div>
+
+      </div>
+    </ProtectedRoutes>
   )
 }
 

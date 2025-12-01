@@ -87,7 +87,7 @@ export default function StrategicSection() {
 
             >
                 <div className=' text-white'>
-                    <h1 className='font-[600] text-[44px] leading-[53px]'><span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Strategic </span>key locations</h1>
+                    <h1 className='font-[700] text-[44px] leading-[53px]'><span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Strategic </span>key locations</h1>
                 </div>
                 <p className="mt-3 text-[14px] w-[80%] text-gray-300">
                     Global presence for reliable, cost-efficient mining operations

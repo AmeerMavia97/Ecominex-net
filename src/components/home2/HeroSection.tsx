@@ -89,7 +89,7 @@ const MiningHeroSlider = () => {
                 <div className="">
                     <div className="text-white flex flex-col gap-4">
                         <div className="flex items-center justify-between leading-[60px]">
-                            <h1 className="font-[600] text-[60px]">Start Mining Today </h1>
+                            <h1 className="font-[700] text-[60px]">Start Mining Today </h1>
                             <div className="flex gap-2.5 mt-3">
                                 <div className='absolute overflow-hidden bg-[#22c55e] -right-10 top-30 blur-[139px]  h-[350px] w-[208px]'></div>
                                 <div className="flex gap-3 mt-3 relative z-50">

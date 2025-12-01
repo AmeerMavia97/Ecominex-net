@@ -32,11 +32,19 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const userData = await login({ email, password }).unwrap();
+
+      console.log(userData);
+      
       dispatch(setCredentials(userData));
       toast.success("Login successful!");
       setTimeout(() => {
         const authState = store.getState().auth;
-        router.push("/Dashboard/");
+        if(userData.user.role === "user"){
+          router.push("/user/dashboard");
+        }else{
+          router.push("/Dashboard");
+
+        }
       }, 100);
       localStorage.setItem("IsAuthenticate" , "true")
       localStorage.setItem("token" , userData.token)

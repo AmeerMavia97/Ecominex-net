@@ -1,22 +1,15 @@
 import "@/css/style.css";
-import React  from "react";
+import React from "react";
 import { Poppins } from 'next/font/google';
-import { Roboto } from "next/font/google";
 
 import StoreProvider from "@/lib/feature/provider/StoreProvider";
 
 
 const poppins = Poppins({
-  weight: ['400', '500', '700'],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ['latin'],
 });
 
-
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-roboto",
-});
 
 export default function RootLayout({
   children,
@@ -25,12 +18,12 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
-      
-      <body suppressHydrationWarning={true}  className={poppins.className}>
+    <html lang="en" className={poppins.className}>
+
+      <body suppressHydrationWarning={true}  >
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
-        <StoreProvider>
-          {children}
+          <StoreProvider>
+            {children}
           </StoreProvider>
         </div>
       </body>

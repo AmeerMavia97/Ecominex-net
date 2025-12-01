@@ -1,7 +1,5 @@
 "use client";
 import React, { ReactNode, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/store/store";
 import { usePathname, useRouter } from "next/navigation";
 import { useGetCurrentUserQuery } from "@/lib/feature/auth/authThunk";
 
@@ -10,34 +8,40 @@ interface ProtectedRoutesProps {
 }
 
 const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
-  // const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname()
 
-  const IsAuthenticateds = localStorage.getItem("IsAuthenticate")
+  const isAuth = typeof window !== "undefined"
+    ? localStorage.getItem("IsAuthenticate")
+    : null;
 
-  const { data: users, isError, error, refetch } = useGetCurrentUserQuery();
+  const { data: user } = useGetCurrentUserQuery();
 
-
-  const adminRoutes = [
-    "/Dashboard/AllUser/",
-    "/Dashboard/Assign/",
-    "/Dashboard/AllTransaction/",
-    "/Dashboard/AdminTran/",
-    "/Dashboard/contactUs/admin/",
-  ];
+  const adminRoutes = ["/Dashboard/AllUser/", "/Dashboard/AllTransaction/", "/Dashboard/ContactUs/", "/Dashboard/Machine/", "/Dashboard/UserProfile/", "/Dashboard/"];
+  const userRoutes = ["/user/dashboard/", "/user/referrals/", "/user/machines/", "/user/wallet/", "/user/settings/"];
 
   useEffect(() => {
-    if (IsAuthenticateds !== "true") {
+    if (isAuth !== "true") {
       router.replace("/auth/signin");
       return;
     }
-    if (IsAuthenticateds === "true" && users?.role !== "admin" && adminRoutes.includes(pathname)) {
-      router.replace("/Dashboard");
+
+    if (!user) return;
+
+    const role = user.role?.toLowerCase();
+
+   
+    if (role === "user" && adminRoutes.includes(pathname)) {
+      router.replace("/user/dashboard");
       return;
     }
 
-  }, [IsAuthenticateds, pathname, users]);
+  
+    if (role === "admin" && userRoutes.includes(pathname)) {
+      router.replace("/user/dashboard");
+      return;
+    }
+  }, [pathname, user, isAuth]);
 
   return <>{children}</>;
 };

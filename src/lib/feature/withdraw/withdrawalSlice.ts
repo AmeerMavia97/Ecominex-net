@@ -227,7 +227,7 @@ export const getBalanceHistory = createAsyncThunk<
 
 const initialState: WithdrawalState = {
   withdrawals: [],
-  pendingWithdrawals: [],
+  pendingWithdrawals: [], // array
   allWithdrawals: [], // Add this line
 
   stats: null,

@@ -15,6 +15,7 @@ import {
   Calendar,
   ArrowLeft,
   Loader2,
+  ArrowUpRight,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -37,6 +38,12 @@ import { AppDispatch } from "@/lib/store/store";
 import { useUsers } from "@/hooks/Userdetail";
 import { getUserBalance } from "@/lib/feature/userMachine/balanceSlice"; // Added import for balance fetching
 import { fetchUserWithdrawals } from "@/lib/feature/withdraw/withdrawalSlice";
+import DashboardLayout from "@/components/Dashboard/DasboardLayout/DasboardLayout";
+import DashboardHeader from "@/components/Dashboard/DashboardHeader/DashboardHeader";
+import Image from "next/image";
+import { ToastContainer } from "react-toastify";
+import Link from "next/link";
+import ProtectedRoutes from "@/components/config/protectedRoute/ProtectedRoutes";
 
 interface RootState {
   userMachine: {
@@ -87,6 +94,7 @@ const UserDetailsPage = () => {
   const transactionsState = useSelector(
     (state: RootState) => state.transactions,
   );
+
   const balanceState = useSelector((state: RootState) => state.balance);
   const withdrawalState = useSelector((state: RootState) => state.withdrawal);
   const withdrawals = withdrawalState?.withdrawals || [];
@@ -147,270 +155,339 @@ const UserDetailsPage = () => {
     });
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount || 0);
-  };
+
+  function formatAmount(amount?: number) {
+    if (!amount && amount !== 0) return "0";
+    if (amount >= 1_000_000_000) return (amount / 1_000_000_000).toFixed(1) + "B";
+    if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(1) + "M";
+    if (amount >= 1_000) return (amount / 1_000).toFixed(1) + "K";
+    return amount.toLocaleString("en-US");
+  }
+
+
+
+
+  const stats = [
+    {
+      title: "Total Machines",
+      value: userMachines?.length || 0,
+      note: "Registered Machine on this User",
+      gradient: true,
+      navigate: ""
+    },
+    {
+      title: "Total Balance",
+      value: formatAmount(userBalance || userProfit?.totalProfit || 0),
+      note: "Count of all Balance ",
+      gradient: false,
+      navigate: ""
+    },
+    {
+      title: "Total Transaction",
+      value: transactions?.totalTransactions || 0,
+      note: " Count of all Transaction ",
+      gradient: false,
+      navigate: ""
+    }
+  ];
 
   if (localLoading || isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-black p-6 text-gray-100">
-        <Loader2 className="mr-2 h-8 w-8 animate-spin text-blue-400" />
-        <div className="text-xl">Loading user details...</div>
+      <div className="flex justify-center items-center min-h-screen bg-transparent">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
       </div>
     );
   }
 
+
+
   return (
-    <div className="min-h-screen bg-gray-950 p-6 text-gray-50">
-      <Button
-        onClick={() => router.back()}
-        variant="ghost"
-        className="mb-6 text-gray-300 hover:bg-gray-800/50 hover:text-white"
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Back to Users
-      </Button>
+    <ProtectedRoutes>
+      <DashboardLayout>
+        <DashboardHeader title="User Management" desc="Manage and track all user activity with real-time updates and organized details." />
+        <Button
+          onClick={() => router.back()}
+          variant="ghost"
+          className="mb-4 -mt-3 border-b-[1px] rounded-none px-2 ml-2 border-green-500 text-green-500 hover:bg-transparent  hover:text-green-400"
+        >
+          <ArrowLeft className="mr-0 h-4 w-4" />
+          Back to Users
+        </Button>
+        <section className="bg-[#1b1b1b] px-5 mx-2 pb-8 pt-3 rounded-[10px]">
 
-      {/* User Profile Header */}
-      <Card className="mb-6 border-gray-700/50 bg-gray-800/90 shadow-xl">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-4">
-            <div className="rounded-full bg-blue-500/20 p-3">
-              <User className="h-8 w-8 text-blue-400" />
-            </div>
+          {/* TOP USER SECTION */}
+          <div className="flex gap-6 items-center border-b-[1px] pb-7 border-[#969696a0]">
+            <Image
+              src={"/userdash.jpg"}
+              width={110}
+              height={110}
+              alt="User"
+              className="rounded-full"
+            />
+
             <div>
-              <h1 className="text-2xl font-bold text-white">
-                {currentUser?.firstName} {currentUser?.lastName}
+              <h1 className="text-white text-3xl font-bold">
+                {currentUser?.firstName} {currentUser?.lastName || ""}
               </h1>
-              <p className="text-sm text-gray-300">User Profile</p>
-            </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <div className="flex items-center space-x-2 rounded-lg bg-gray-700/30 p-3 text-gray-100">
-              <Mail className="h-4 w-4 text-blue-400" />
-              <span>{currentUser?.email || "N/A"}</span>
-            </div>
-            <div className="flex items-center space-x-2 rounded-lg bg-gray-700/30 p-3 text-gray-100">
-              <Phone className="h-4 w-4 text-blue-400" />
-              <span>{currentUser?.phoneNumber || "N/A"}</span>
-            </div>
-            <div className="flex items-center space-x-2 rounded-lg bg-gray-700/30 p-3 text-gray-100">
-              <MapPin className="h-4 w-4 text-blue-400" />
-              <span>{currentUser?.country || "N/A"}</span>
-            </div>
-            <div className="flex items-center space-x-2 rounded-lg bg-gray-700/30 p-3 text-gray-100">
-              <Calendar className="h-4 w-4 text-blue-400" />
-              <span>Joined {formatDate(currentUser?.createdAt)}</span>
+              <p className="text-gray-300 mt-1 font-[500]">{currentUser?.email || "N/A"}</p>
             </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Tabs Navigation */}
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="border-gray-700 bg-gray-800/90">
-          <TabsTrigger
-            className="text-gray-100 data-[state=active]:bg-gray-700 data-[state=active]:text-white"
-            value="overview"
-          >
-            Overview
-          </TabsTrigger>
-          <TabsTrigger
-            className="text-gray-100 data-[state=active]:bg-gray-700 data-[state=active]:text-white"
-            value="machines"
-          >
-            Machines
-          </TabsTrigger>
-          <TabsTrigger
-            className="text-gray-100 data-[state=active]:bg-gray-700 data-[state=active]:text-white"
-            value="transactions"
-          >
-            Transactions
-          </TabsTrigger>
-        </TabsList>
+          {/* Detail START */}
+          <div className="px-1 mt-8">
+            <h2 className="text-[21px] font-[500] text-white">Profile Details</h2>
 
-        {/* Overview Tab */}
-        <TabsContent value="overview">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <Card className="border-gray-700/50 bg-gray-800/90 shadow-lg hover:bg-gray-800">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-gray-100">
-                  <Cpu className="h-4 w-4 text-blue-400" />
-                  <span>Total Machines</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-white">
-                  {userMachines?.length || 0}
+            <div className="space-y-5 pt-6">
+
+              {/* NAME ROW */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-gray-100 font-[500] tracking-[0.3px] text-[15px]">
+                    Full Name
+                  </label>
+                  <div className="border-zinc-400 border rounded-[5px] px-4 h-[50px] font-[500] bg-transparent text-[#f9f9f9] text-[14px] placeholder:text-gray-300 flex items-center">
+                    {currentUser?.firstName + currentUser?.lastName}
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card className="border-gray-700/50 bg-gray-800/90 shadow-lg hover:bg-gray-800">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-gray-100">
-                  <DollarSign className="h-4 w-4 text-blue-400" />
-                  <span>Total Balance</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-green-400">
-                  {formatCurrency(userBalance || userProfit?.totalProfit || 0)}
+                <div className="space-y-2">
+                  <label className="text-gray-100 font-[500] tracking-[0.3px] text-[15px]">
+                    Created At
+                  </label>
+                  <div className="border-zinc-400 border rounded-[5px] px-4 h-[50px] font-[500] bg-transparent text-[#f9f9f9] text-[14px] placeholder:text-gray-300 flex items-center">
+                    {formatDate(currentUser?.createdAt)}
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
 
-            <Card className="border-gray-700/50 bg-gray-800/90 shadow-lg hover:bg-gray-800">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-gray-100">
-                  <History className="h-4 w-4 text-blue-400" />
-                  <span>Total Transactions</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-white">
-                  {transactions?.totalTransactions || 0}
+              {/* EMAIL */}
+              <div className="space-y-2">
+                <label className="text-gray-100 font-[500] tracking-[0.3px] text-[15px]">
+                  Email
+                </label>
+                <div className="border-zinc-400 border rounded-[5px] px-4 h-[50px] font-[500] bg-transparent text-[#f9f9f9] text-[14px] placeholder:text-gray-300 flex items-center">
+                  {currentUser?.email}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+
+              {/* COUNTRY + PHONE */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-gray-100 font-[500] tracking-[0.3px] text-[15px]">
+                    Country
+                  </label>
+                  <div className="border-zinc-400 border rounded-[5px] px-4 h-[50px] font-[500] bg-transparent text-[#f9f9f9] text-[14px] placeholder:text-gray-300 flex items-center">
+                    {currentUser?.country || "N/A"}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-gray-100 font-[500] tracking-[0.3px] text-[15px]">
+                    Phone Number
+                  </label>
+                  <div className="border-zinc-400 border rounded-[5px] px-4 h-[50px] font-[500] bg-transparent text-[#f9f9f9] text-[14px] placeholder:text-gray-300 flex items-center">
+                    {currentUser?.phoneNumber}
+                  </div>
+                </div>
+              </div>
+
+
+              <ToastContainer />
+            </div>
           </div>
-        </TabsContent>
 
-        {/* Machines Tab */}
-        <TabsContent value="machines">
-          <Card className="border-gray-700/50 bg-gray-800/90 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-gray-100">Assigned Machines</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {userMachines && userMachines.length > 0 ? (
-                <Table>
-                  <TableHeader>
-                    <TableRow className="border-gray-700 bg-gray-900/50">
-                      <TableHead className="text-gray-300">
-                        Machine Name
-                      </TableHead>
-                      <TableHead className="text-gray-300">Model</TableHead>
-                      <TableHead className="text-gray-300">
-                        Assigned Date
-                      </TableHead>
-                      <TableHead className="text-gray-300">Status</TableHead>
-                      <TableHead className="text-gray-300">
-                        Current Profit
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {userMachines.map((machine) => (
-                      <TableRow
-                        key={machine._id}
-                        className="border-gray-700/50 text-gray-100 hover:bg-gray-700/50"
-                      >
-                        <TableCell>
-                          {machine.machine?.machineName || "N/A"}
-                        </TableCell>
-                        <TableCell>{machine.machine?.model || "N/A"}</TableCell>
-                        <TableCell>
-                          {formatDate(machine.assignedDate)}
-                        </TableCell>
-                        <TableCell>
-                          <span
-                            className={`rounded-full px-2 py-1 text-xs font-semibold
-                            ${
-                              machine.status === "active"
-                                ? "bg-green-500/20 text-green-400"
-                                : "bg-red-500/20 text-red-400"
-                            }`}
-                          >
-                            {machine.status || "unknown"}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-green-400">
-                          {formatCurrency(machine.monthlyProfitAccumulated)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              ) : (
-                <div className="flex h-24 items-center justify-center text-gray-400">
-                  No machines assigned to this user
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
+        </section>
 
-        {/* Transactions Tab */}
-        {/* Transactions Tab */}
-        <TabsContent value="transactions">
-          <Card className="border-gray-700/50 bg-gray-800/90 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-gray-100">
-                Transaction History
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {withdrawals && withdrawals.length > 0 ? (
-                <Table>
-                  <TableHeader>
-                    <TableRow className="border-gray-700 bg-gray-900/50">
-                      <TableHead className="text-gray-300">Date</TableHead>
-                      <TableHead className="text-gray-300">Type</TableHead>
-                      <TableHead className="text-gray-300">Amount</TableHead>
-                      <TableHead className="text-gray-300">Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {withdrawals.map((withdrawal) => (
-                      <TableRow
-                        key={withdrawal._id}
-                        className="border-gray-700/50 text-gray-100 hover:bg-gray-700/50"
-                      >
-                        <TableCell>
-                          {formatDate(withdrawal.transactionDate)}
-                        </TableCell>
-                        <TableCell>
-                          <span className="rounded-full bg-blue-500/20 px-2 py-1 text-xs font-semibold text-blue-400">
-                            withdrawal
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-red-400 font-semibold">
-                          -{formatCurrency(withdrawal.amount)}
-                        </TableCell>
-                        <TableCell>
-                          <span
-                            className={`rounded-full px-2 py-1 text-xs font-semibold
-                    ${
-                      withdrawal.status === "approved"
-                        ? "bg-green-500/20 text-green-400"
-                        : withdrawal.status === "pending"
-                          ? "bg-yellow-500/20 text-yellow-400"
-                          : "bg-red-500/20 text-red-400"
-                    }`}
-                          >
-                            {withdrawal.status || "pending"}
-                          </span>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              ) : (
-                <div className="flex h-24 items-center justify-center text-gray-400">
-                  No withdrawals found for this user
+        <div>
+          <Tabs defaultValue="assign" className="w-full mt-5">
+            <TabsList className="grid grid-cols-3 mb-8 gap-10 w-[400px] bg-transparent text-white text-[15.5px]">
+              <TabsTrigger value="assign">Overview</TabsTrigger>
+              <TabsTrigger value="assigned">Machines</TabsTrigger>
+              <TabsTrigger value="addmachine">Transactions</TabsTrigger>
+            </TabsList>
+
+            {/* TAB 1 — Machines */}
+            <TabsContent value="assign">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {stats.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`relative px-5 py-[26px] rounded-[25px] shadow-sm 
+                        flex flex-col gap-4.5 justify-between
+                        ${item.gradient
+                        ? "bg-gradient-to-b from-[#1dae52] to-[#08381a] border-none"
+                        : "bg-[#1b1b1b] "
+                      }`}
+                  >
+                    {/* Top right arrow icon */}
+                    <Link className="absolute right-0 top-0" href={item.navigate}>
+                      <div className={`absolute top-3 p-1.5 right-3 text-lg opacity-100 border-[1.5px] rounded-full ${item.gradient ? "!bg-[#fff] " : "bg-transparent"} border-gray-200`}>
+                        <ArrowUpRight className={`size-5.5 ${item.gradient ? "text-[#000]" : "text-gray-200"}`} />
+                      </div>
+                    </Link>
+
+                    <h3 className="text-[15px] font-medium text-gray-100">{item.title}</h3>
+                    <p className="text-[52px] leading-[55px] font-medium text-gray-200">{item.value}</p>
+                    <span className={`text-[12.5px] ${item.gradient ? "text-gray-200" : "text-gray-300"}`}>
+                      {item.note}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+            </TabsContent>
+
+            {/* TAB 2 — Assigned Machines */}
+            <TabsContent value="assigned">
+
+              <div className="bg-[#1b1b1b] px-6 py-6 rounded-md">
+                <div>
+                  <h1 className="text-white text-[25px] font-semibold mb-5">Assigned Machines</h1>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+
+                <div>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="text-gray-200 border-b border-[#ffffff65] text-[16px]">
+                        <th className="py-3 text-left font-medium">Machine Name</th>
+                        <th className="py-3 text-left font-medium">Assigned Date</th>
+                        <th className="py-3 text-center font-medium">Current Profit </th>
+                        <th className="py-3 text-center font-medium">Status</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {isLoading ? (
+                        <tr>
+                          <td colSpan={7} className="py-8 text-center text-gray-300">
+                            Loading...
+                          </td>
+                        </tr>
+                      ) : userMachines.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="py-8 text-center text-gray-300">
+                            No machines found.
+                          </td>
+                        </tr>
+                      ) : (
+                        userMachines.map((item) => (
+                          <tr key={item._id} className="border-b border-[#ffffff65] hover:bg-[#0f0f0f78] duration-300">
+
+
+                            {/* MACHINE */}
+                            <td className="py-4 flex items-center gap-3 text-white">
+
+
+                              <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
+                                {(item.machine?.machineName || "U").charAt(0).toUpperCase()}
+                              </div>
+
+                              <div>
+                                <span className="font-medium text-[15px] block">{item.machine?.machineName || "N/A"}</span>
+                              </div>
+                            </td>
+
+                            {/* DATE */}
+                            <td className="py-4 text-gray-200 text-start">{formatDate(item.assignedDate)}</td>
+
+                            {/* PROFIT */}
+                            <td className="py-4 text-center text-[16px] font-[600] text-white">${formatAmount(item.monthlyProfitAccumulated)}</td>
+
+                            {/* STATUS */}
+                            <td className="py-4 text-center">
+                              <span
+                                className={`px-2 py-1 rounded-full text-[13px] ${(item.status ?? "").toLowerCase() === "active" ? "bg-green-800/40 text-green-400" : "bg-[#66000095] text-red"
+                                  }`}
+                              >
+                                {item.status ?? "-"}
+                              </span>
+                            </td>
+
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </TabsContent>
+
+            {/* TAB 3 — Add Machine */}
+            <TabsContent value="addmachine">
+              <div className="bg-[#1b1b1b] px-6 py-6 rounded-md">
+                <div>
+                  <h1 className="text-white text-[25px] font-semibold mb-5"> Transaction History</h1>
+                </div>
+
+                <div>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="text-gray-200 border-b border-[#ffffff65] text-[16px]">
+                        <th className="py-3 text-left font-medium">Date</th>
+                        <th className="py-3 text-left font-medium">Type</th>
+                        <th className="py-3 text-center font-medium">Amount</th>
+                        <th className="py-3 text-center font-medium">Status</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {isLoading ? (
+                        <tr>
+                          <td colSpan={7} className="py-8 text-center text-gray-300">
+                            Loading...
+                          </td>
+                        </tr>
+                      ) : withdrawals.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="py-8 text-center text-gray-300">
+                            No machines found.
+                          </td>
+                        </tr>
+                      ) : (
+                        withdrawals.map((item) => (
+                          <tr key={item._id} className="border-b border-[#ffffff65] hover:bg-[#0f0f0f78] duration-300">
+
+
+                            {/* MACHINE */}
+                            <td className="py-4 flex items-center gap-3 text-white">
+
+
+                              <div>
+                                <span className="font-medium text-[15px] block">{formatDate(item.transactionDate)}</span>
+                              </div>
+                            </td>
+
+                            {/* DATE */}
+                            <td className="py-4 text-gray-200 text-start">Withdrawals</td>
+
+                            {/* PROFIT */}
+                            <td className="py-4 text-center text-[16px] font-[600] text-white">${formatAmount(item.amount)}</td>
+
+                            {/* STATUS */}
+                            <td className="py-4 text-center">
+                              <span
+                                className={`px-2 py-1 rounded-full text-[13px] ${(item.status ?? "").toLowerCase() === "approved" ? "bg-green-800/40 text-green-400" : "bg-[#66000095] text-red"
+                                  }`}
+                              >
+                                {item.status ?? "-"}
+                              </span>
+                            </td>
+
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </DashboardLayout>
+    </ProtectedRoutes>
+
   );
 };
 

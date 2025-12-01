@@ -78,13 +78,13 @@ export default function FAQSection({ faqs , heading }: FAQSectionProps ) {
                 {/* header row */}
                 <div className="mb-10 flex items-center justify-between gap-6">
                     <div>
-                        <h1 className="text-white font-[600] text-[44px] leading-[53px]">
+                        <h1 className="text-white font-[700] text-[44px] leading-[53px]">
                             <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"> {heading}</span>
                         </h1>
                         <p className="mt-2 text-[14px] w-[75%] text-gray-300">Find the most frequently asked questions about bitcoin mining and our hosting.</p>
                     </div>
                     {heading === "FAQs" &&  <Link href="/contactUs">
-                        <button className="font-semibold border px-6 py-2.5 text-[13.5px] rounded-full border-green-500 text-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all duration-300">
+                        <button className="font-[700] border px-6 py-2.5 text-[13.5px] rounded-full border-green-500 text-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all duration-300">
                             Learn More
                         </button>
                     </Link>}

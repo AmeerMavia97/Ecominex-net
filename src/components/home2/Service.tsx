@@ -71,7 +71,7 @@ export default function ServicesSection() {
         <section className="w-full bg-transparent py-20 relative ">
             <div className='text-center items-center flex flex-col text-white'>
 
-                <h1 className='font-[600] text-[48px]'>Our <span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Services</span></h1>
+                <h1 className='font-[700] text-[48px]'>Our <span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Services</span></h1>
 
                 <p className='w-[60%] text-[#d2d2d2] text-[14.5px]'>We offer you turnkey solutions for getting started in mining, without having to manage
 
@@ -117,7 +117,7 @@ export default function ServicesSection() {
             <div className='absolute overflow-hidden bg-[#22c55e] -right-10 bottom-16 blur-[139px]  h-[350px] w-[208px]'></div>
             <div className="items-center flex justify-center mt-10">
                 <Link href="/calculator/">
-                    <button className="!font-semibold border-[1px] px-7 py-3 text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition">
+                    <button className="!font-[700] border-[1px] px-7 py-3 text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition">
                         Calculate my Profits
                     </button>
                 </Link>

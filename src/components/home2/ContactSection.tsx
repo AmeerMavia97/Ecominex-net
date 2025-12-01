@@ -10,7 +10,7 @@ const HomeContactSection = () => {
 
                 <div className="text-center flex flex-col justify-center items-center">
                             <div className=' text-white'>
-                                <h1 className='font-[600] text-[34px] leading-[43px] sm:text-[44px] sm:leading-[53px]'><span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Visit </span>Our Location</h1>
+                                <h1 className='font-[700] text-[34px] leading-[43px] sm:text-[44px] sm:leading-[53px]'><span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Visit </span>Our Location</h1>
                             </div>
 
                             <p className="mt-3 text-[13px] sm:text-[14px] sm:w-[35%] text-gray-300">

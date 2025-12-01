@@ -78,7 +78,7 @@ const AboutUs: React.FC<AboutUsProps> = ({
   const { ref, y } = useParallaxFast(260, 0.5);
 
   return (
-    <section id={id} ref={ref} className="w-full bg-[#101010] p-20 relative">
+    <section id={id} ref={ref} className="w-full bg-[#101010] py-20 relative">
       {/* Decorative Blurs */}
       <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] -right-10 h-[180px] w-[180px]" />
 
@@ -91,7 +91,7 @@ const AboutUs: React.FC<AboutUsProps> = ({
           </div>
 
           {/* Title with Highlight */}
-          <h1 className="font-[600] text-[44px] leading-[53px] w-[80%]">
+          <h1 className="font-[700] text-[44px] leading-[53px] w-[80%]">
             {title.split(new RegExp(`(${highlight})`, "gi")).map((part, idx) =>
               part.toLowerCase() === highlight.toLowerCase() ? (
                 <span
@@ -120,7 +120,7 @@ const AboutUs: React.FC<AboutUsProps> = ({
           {buttonText && (
             <div className="mt-2">
               <Link href="/About">
-                <button className="!font-semibold border-[1px] px-7 py-3 text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-black transition-all cursor-pointer">
+                <button className="!font-[700] border-[1px] px-7 py-3 text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-black transition-all cursor-pointer">
                   {buttonText}
                 </button>
               </Link>

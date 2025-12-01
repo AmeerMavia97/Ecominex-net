@@ -100,7 +100,7 @@ export default function PhotoStrip() {
       {/* header */}
       <div className='absolute overflow-hidden bg-[#22c55e]  blur-[139px]  -left-10 h-[120px] w-[120px]'></div>
       <div className="flex flex-col items-center text-center">
-        <h1 className="text-white font-[600] text-[44px] leading-[53px]">
+        <h1 className="text-white font-[700] text-[44px] leading-[53px]">
           Follow <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">Us</span>
         </h1>
         <p className="mt-2 text-[14px] text-gray-300">Learn more about us on Instagram!</p>
@@ -110,7 +110,7 @@ export default function PhotoStrip() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <button className="font-semibold border px-6 py-2.5 text-[13.5px] rounded-full border-green-500 text-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all duration-300">
+            <button className="font-[700] border px-6 py-2.5 text-[13.5px] rounded-full border-green-500 text-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all duration-300">
               Follow
             </button>
           </Link>

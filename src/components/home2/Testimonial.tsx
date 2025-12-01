@@ -117,7 +117,7 @@ export default function Testimonials() {
              <div className='absolute overflow-hidden bg-[#22c55e]  blur-[139px]  -right-10 h-[180px] w-[180px]'></div>
             <div className="">
                 <div className="text-center">
-                    <h1 className="text-white font-[600] text-[48px] leading-[53px]"> Testimonials
+                    <h1 className="text-white font-[700] text-[48px] leading-[53px]"> Testimonials
                         <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"> </span>
                     </h1>
                     <div className="mt-2.5 inline-flex items-center gap-4">

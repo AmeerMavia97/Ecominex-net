@@ -1,29 +1,24 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { User, LogOut, Cpu, ChevronRight, WalletMinimal, CreditCard, UsersRound, ScrollText, ShieldCheck, ArrowLeftRight, BookUser, LayoutDashboard, ShoppingCart, Settings } from "lucide-react";
+import { User, LogOut, Cpu, ChevronRight, WalletMinimal, CreditCard, UsersRound, ScrollText, ShieldCheck, ArrowLeftRight, BookUser, LayoutDashboard, ShoppingCart, Settings, WalletCards, Users } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { logout, setUser } from "@/lib/feature/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { AppDispatch, RootState } from "@/lib/store/store";
+import { RootState } from "@/lib/store/store";
 import { useLogoutMutation } from "@/lib/feature/auth/authThunk";
-// import ProtectedRoutes from "../config/protectedRoute/ProtectedRoutes";
 import { baseApiSlice } from "@/lib/store/apiSlice";
 import Sidebar from "../DashboardSidebar/DashboardSidebar";
 
 const adminMenu = [
-  { label: "Dashboard", icon: WalletMinimal, link: "/Dashboard" },
-  { label: "Total Machine", icon: Cpu, link: "/Dashboard/TotalMachine" },
-  { label: "Profile", icon: User, link: "/Dashboard/UserProfile" },
-  { label: "Payments", icon: CreditCard, link: "/Dashboard/Payments" },
-  { label: "All User", icon: UsersRound, link: "/Dashboard/AllUser" },
-  { label: "Assign Machine", icon: ScrollText, link: "/Dashboard/Assign" },
-  { label: "Transaction Action", icon: ShieldCheck, link: "/Dashboard/AllTransaction" },
-  { label: "All Transaction", icon: ArrowLeftRight, link: "/Dashboard/AdminTran" },
-  { label: "All Contact", icon: BookUser, link: "/Dashboard/contactUs/admin" },
-  { label: "Logout", icon: LogOut, link: "#" },
+  { label: "Dashboard", icon: LayoutDashboard, link: "/Dashboard/" },
+  { label: "Machine", icon: ShoppingCart, link: "/Dashboard/Machine/" },
+  { label: "All Users", icon: Users, link: "/Dashboard/AllUser/" },
+  { label: "Transactions", icon: WalletCards , link: "/Dashboard/AllTransaction/" },
+  { label: "Manage Contacts", icon: ScrollText, link: "/Dashboard/contactUs/" },
+  { label: "Settings", icon: Settings  , link: "/Dashboard/UserProfile" },
 ];
 
 const userMenu = [
@@ -53,26 +48,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     const pathname = usePathname();
     const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
     console.log(user, isAuthenticated);
-    const navigationLinks = [
-        { link: "/Dashboard", icon: WalletMinimal, label: "Dashboard" },
-        { link: "/Dashboard/TotalMachine", icon: Cpu, label: "Total Machine" },
-        { link: "/Dashboard/UserProfile", icon: User, label: "Profile" },
-        { link: "/Dashboard/Payments", icon: CreditCard, label: "Payments" },
-        { link: "/Dashboard/AllUser", icon: UsersRound, label: "All User" },
-        { link: "/Dashboard/Assign", icon: ScrollText, label: "Assign Machine" },
-        { link: "/Dashboard/AllTransaction", icon: ShieldCheck, label: "Transaction Action" },
-        { link: "/Dashboard/AdminTran", icon: ArrowLeftRight, label: "All Transaction" },
-        { link: "/Dashboard/contactUs/admin", icon: BookUser, label: "All Contact" },
-        { link: "#", icon: LogOut, label: "Logout" },
-    ];
-    const navigationUser = [
-        { link: "/Dashboard", icon: WalletMinimal, label: "Dashboard" },
-        { link: "/Dashboard/TotalMachine", icon: Cpu, label: "Total Machine" },
-        { link: "/Dashboard/Payments", icon: CreditCard, label: "Payments" },
-        { link: "/Dashboard/Referral", icon: CreditCard, label: "Referrals" },
-        { link: "/Dashboard/UserProfile", icon: User, label: "Profile" },
-        { link: "#", icon: LogOut, label: "Logout" },
-    ];
+  
     useEffect(() => {
         if (user?.role === "admin") {
             setroleCheck(true)
@@ -141,6 +117,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         );
     };
 
+       if (isAuthenticated && user.role !== "admin") {
+        return (
+            <div className="flex justify-center items-center min-h-screen bg-transparent">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
+            </div>
+        );
+    }
+
     return (
 
             <div className="flex items-stretch">
@@ -149,7 +133,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                     onLogout={() => setShowLogoutModal(true)}
                 />
 
-                <main className=" bg-[#000] h-[200vh]  p-6 w-[100%]">
+                <main className=" bg-[#000] p-6 w-[100%]">
                     {children}
                 </main>
             </div>

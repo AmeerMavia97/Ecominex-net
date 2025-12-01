@@ -90,7 +90,7 @@ const HomeNavbar = () => {
                 {isLoading ? (
                   <div className="h-6 w-24 animate-pulse rounded bg-gray-700"></div>
                 ) : isAuthenticated ? (
-                  <Link href="/Dashboard">
+                  <Link href={user?.role === "admin" ? "/Dashboard" : "/user/dashboard"}>
                     <button className="!font-semibold border-[1px] px-4 py-2 text-[13.5px] rounded-full border-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all">
                  Dashboard
                 </button>
@@ -107,7 +107,7 @@ const HomeNavbar = () => {
                 )}
               </div>
 
-              <Link href="/contactUs">
+              <Link href="/booking">
                 <button className="!font-semibold border-[1px] px-4 py-2 text-[13.5px] rounded-full border-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all">
                   Book Appointment
                 </button>

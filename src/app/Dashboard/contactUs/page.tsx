@@ -1,21 +1,20 @@
-import FaqSection from "@/components/contactUs/FaqSection";
-import ContactUs from "@/components/contactUs/contactPage";
-import LandingLayout from "@/components/Layouts/LandingLayout";
-import React from "react";
-import ContactPage from "@/components/contactUs/contactPage";
-import LocationSection from "@/components/contactUs/Map";
-import ContactForm from "@/components/contactUs/conatactForm";
+import DashboardLayout from '@/components/Dashboard/DasboardLayout/DasboardLayout'
+import DashboardHeader from '@/components/Dashboard/DashboardHeader/DashboardHeader'
+import React from 'react'
+import ContactManagement from '@/components/Dashboard/ContactManagement/ContactManagement';
+import ProtectedRoutes from '@/components/config/protectedRoute/ProtectedRoutes';
 
 function page() {
   return (
-    <div>
-      <LandingLayout>
-        <ContactForm/>
-        <LocationSection/>
-        <FaqSection />
-      </LandingLayout>
-    </div>
-  );
+    <ProtectedRoutes>
+      <div>
+        <DashboardLayout>
+          <DashboardHeader title="Contact Management" />
+          <ContactManagement />
+        </DashboardLayout>
+      </div>
+    </ProtectedRoutes>
+  )
 }
 
 export default page;

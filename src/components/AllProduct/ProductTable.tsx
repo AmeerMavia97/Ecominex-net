@@ -8,7 +8,7 @@ import { useGetAllMiningMachinesQuery, useDeleteMiningMachineMutation } from "@/
 import { Pencil, Trash2, Eye, Search, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
-import DeleteModal from './DeleteModal';  // Import the new DeleteModal component
+import DeleteModal from './DeleteModal';  
 
 
 interface MiningMachine {
@@ -24,7 +24,7 @@ interface MiningMachine {
   createdAt: string;
 }
 
-// Delete Confirmation Modal Component
+
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -33,7 +33,6 @@ interface DeleteConfirmationModalProps {
   description: string;
   isLoading?: boolean;
 }
-
 
 
 // Main AdminProductTable Component
