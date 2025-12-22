@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import Testimon1 from '../../../public/Testi1.jpg'
 
 type Testimonial = {
     name: string;
@@ -27,7 +26,7 @@ const ITEMS: Testimonial[] = [
         name: "Patrick Stone",
         first: "Patrick",
         last: "Stone",
-        avatar: "/Testi2.webp",
+        avatar: "/Testi1.jpg",
         text:
             "I've bought all my miners with them and never experienced any problem. The logistic and shipping was fast.",
         stars: 5,
@@ -114,114 +113,112 @@ export default function Testimonials() {
     }, [paused, maxIndex, step]);
 
     return (
-        <section className="w-full bg-[#111] py-16">
-             <div className='absolute overflow-hidden bg-[#22c55e]  blur-[139px]  -right-10 h-[180px] w-[180px]'></div>
-            <div className="">
-                <div className="text-center">
-                    <h1 className="text-white font-[700] text-[48px] leading-[53px]"> Testimonials
-                        <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"> </span>
-                    </h1>
-                    <div className="mt-2.5 inline-flex items-center gap-4">
-                        <div>
-                            <img className="w-28" src="/trustpilot-icon.webp" alt="" />
-                        </div>
-                        <p className="text-white text-[15px] font-semibold">
-                            4.7 / 5 stars on TrustPilot
-                        </p>
-                    </div>
+  <section className="w-full bg-[#111] py-12 sm:py-16 px-3 sm:px-4 lg:px-0 relative">
+    {/* green glow */}
+    <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] -right-10 top-10 h-[180px] w-[180px]" />
+
+    <div className="max-w-6xl mx-auto">
+      {/* Heading */}
+      <div className="text-center">
+  <h1 className="text-white font-[600] text-2xl sm:text-3xl md:text-[48px] leading-snug md:leading-[53px]">
+    Testimonials
+    <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
+      {" "}
+    </span>
+  </h1>
+
+  {/* 5 stars + Trustpilot text */}
+  <div className="mt-2.5 inline-flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+    <img className="w-20 sm:w-24 md:w-28" src="/trustpilot-icon.webp" alt="" />
+    <p className="text-white text-sm sm:text-[15px] font-semibold">
+      4.7 / 5 stars on TrustPilot
+    </p>
+  </div>
+</div>
+
+      {/* Carousel */}
+      <div
+        ref={wrapRef}
+        className="relative mx-auto mt-8 sm:mt-10 rounded-3xl"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+      >
+        <div className="overflow-hidden rounded-[28px]">
+          <ul
+            className="flex items-stretch"
+            style={{
+              gap: `${GAP}px`,
+              transform: `translate3d(${-index * step}px, 0, 0)`,
+              transition: "transform 450ms ease",
+              willChange: "transform",
+            }}
+          >
+            {ITEMS.map((t, i) => (
+              <li
+                key={i}
+                className="shrink-0 rounded-[28px] border border-white/5 bg-gradient-to-b from-[#1b1b1b] to-[#141414] text-center text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] flex flex-col justify-center items-center px-4 sm:px-7 py-5 sm:py-6"
+                style={{
+                  width: `min(${cardW}px, 100vw - 3rem)`, // clamp width on small screens
+                }}
+              >
+                {/* stars */}
+                <div className="mb-4 sm:mb-5 flex items-center justify-center gap-1.5 sm:gap-2">
+                  {Array.from({ length: t.stars ?? 5 }).map((_, s) => (
+                    <Star key={s} />
+                  ))}
                 </div>
 
-                <div
-                    ref={wrapRef}
-                    className="relative mx-auto mt-10 rounded-3xl"
-                    onMouseEnter={() => setPaused(true)}
-                    onMouseLeave={() => setPaused(false)}
-                    onTouchStart={() => setPaused(true)}
-                    onTouchEnd={() => setPaused(false)}
-                >
-                    {/* <button
-                        onClick={() => go(-1)}
-                        aria-label="Previous"
-                        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 p-3 backdrop-blur hover:bg-black/60"
-                    >
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                            <path d="M15 6l-6 6 6 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                    </button>
-                    <button
-                        onClick={() => go(1)}
-                        aria-label="Next"
-                        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/40 p-3 backdrop-blur hover:bg-black/60"
-                    >
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 6l6 6-6 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                    </button> */}
-                    <div className="overflow-hidden rounded-[28px]">
-                        <ul
-                            className="flex items-stretch"
-                            style={{
-                                gap: `${GAP}px`,
-                                transform: `translate3d(${-index * step}px, 0, 0)`,
-                                transition: "transform 450ms ease",
-                                willChange: "transform",
-                            }}
-                        >
-                            {ITEMS.map((t, i) => (
-                                <li
-                                    key={i}
-                                    className="shrink-0 rounded-[28px] border border-white/5 bg-gradient-to-b from-[#1b1b1b] to-[#141414]  text-center text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] flex flex-col justify-center items-center px-7 py-6"
-                                    style={{ width: `${cardW}px` }}
-                                >
-                                    {/* stars */}
-                                    <div className="mb-5 flex items-center justify-center gap-2">
-                                        {Array.from({ length: t.stars ?? 5 }).map((_, s) => (
-                                            <Star key={s} />
-                                        ))}
-                                    </div>
+                {/* quote */}
+                <p className="text-sm sm:text-[14px] leading-[20px] sm:leading-[22px] text-gray-200">
+                  {t.text}
+                </p>
 
-                                    {/* quote */}
-                                    <p className=" text-[14px] leading-[22px] text-gray-200">
-                                        {t.text}
-                                    </p>
-
-                                    {/* avatar + name */}
-                                    <div className="mt-8 flex flex-col items-center ">
-                                        <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-white/10">
-                                            <Image
-                                                src={t.avatar}
-                                                alt={t.name}
-                                                fill
-                                                className="object-cover"
-                                                sizes="56px"
-                                            />
-                                        </div>
-                                        <h1 className="text-white font-[600] text-[15px] leading-[53px]"> {t.first} 
-                                            <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"> {t.last} </span>
-                                        </h1>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Dots */}
-                    <div className="mt-6 flex items-center justify-center gap-3">
-                        {Array.from({ length: maxIndex + 1 }).map((_, d) => {
-                            const active = d === index;
-                            return (
-                                <button
-                                    key={d}
-                                    aria-label={`Go to slide ${d + 1}`}
-                                    onClick={() => setIndex(d)}
-                                    className={`h-3 w-3 rounded-full transition ${active ? "bg-green-500" : "bg-white/25 hover:bg-white/50"
-                                        }`}
-                                />
-                            );
-                        })}
-                    </div>
+                {/* avatar + name */}
+                <div className="mt-6 sm:mt-8 flex flex-col items-center">
+                  <div className="relative h-9 w-9 sm:h-10 sm:w-10 overflow-hidden rounded-full ring-2 ring-white/10">
+                    <Image
+                      src={t.avatar}
+                      alt={t.name}
+                      fill
+                      className="object-cover"
+                      sizes="56px"
+                    />
+                  </div>
+                  <h1 className="text-white font-[600] text-[14px] sm:text-[15px] leading-[32px] sm:leading-[53px]">
+                    {t.first}
+                    <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
+                      {" "}
+                      {t.last}
+                    </span>
+                  </h1>
                 </div>
-            </div>
-        </section>
-    );
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Dots */}
+        <div className="mt-5 sm:mt-6 flex items-center justify-center gap-2.5 sm:gap-3">
+          {Array.from({ length: maxIndex + 1 }).map((_, d) => {
+            const active = d === index;
+            return (
+              <button
+                key={d}
+                aria-label={`Go to slide ${d + 1}`}
+                onClick={() => setIndex(d)}
+                className={`h-2.5 w-2.5 rounded-full transition ${
+                  active
+                    ? "bg-green-500"
+                    : "bg-white/25 hover:bg-white/50"
+                }`}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+);
 }

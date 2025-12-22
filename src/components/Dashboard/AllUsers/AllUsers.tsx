@@ -225,161 +225,270 @@ export default function UsersTable() {
 
 
   return (
-    <div className="w-full bg-[#1a1a1a] rounded-xl shadow-sm py-6 px-6">
-      {/* Top Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <div className="flex items-center w-full md:w-[40%] focus:outline-green-500 text-gray-100 border border-[#989898] px-3 py-2.5 rounded-sm">
-          <input
-            type="text"
-            placeholder="Search user by name or email..."
-            className="bg-transparent w-full h-[26px] outline-none text-[14px]  text-white placeholder:text-gray-100"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <Search className="size-5 text-green-500" />
-        </div>
+  <div className="w-full bg-[#1a1a1a] rounded-xl shadow-sm py-6 px-3 sm:px-6">
+    {/* Top Bar */}
+    <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 mb-6">
+      {/* Search */}
+      <div className="flex items-center w-full md:w-[40%] focus:outline-green-500 text-gray-100 border border-[#989898] px-3 py-2.5 rounded-sm">
+        <input
+          type="text"
+          placeholder="Search user by name or email..."
+          className="bg-transparent w-full h-[26px] outline-none text-[14px] text-white placeholder:text-gray-100"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Search className="size-5 text-green-500" />
+      </div>
 
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <select
-              className="px-3 appearance-none py-2 rounded-sm bg-[#1f1f1f] border border-[#989898] text-white pr-8"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            >
-              {dynamicCountries.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
-              <ChevronDown className="w-4 h-4 text-green-500" />
-            </div>
+      {/* Filters + Bulk */}
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+        {/* Country select */}
+        <div className="relative">
+          <select
+            className="px-3 appearance-none py-2 rounded-sm bg-[#1f1f1f] border border-[#989898] text-white pr-8 text-sm"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          >
+            {dynamicCountries.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+          <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
+            <ChevronDown className="w-4 h-4 text-green-500" />
           </div>
+        </div>
 
-          <button onClick={() => setSortDesc((s) => !s)} className="px-3.5 py-2 flex items-center gap-2 border-[#989898] border text-white rounded-md font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="#000" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide text-green-500 lucide-funnel-icon lucide-funnel"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" /></svg>
-            Filter
+        {/* Sort / Filter */}
+        <button
+          onClick={() => setSortDesc((s) => !s)}
+          className="px-3.5 py-2 flex items-center gap-2 border-[#989898] border text-white rounded-md font-medium text-sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="#000"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide text-green-500 lucide-funnel-icon lucide-funnel"
+          >
+            <path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" />
+          </svg>
+          Filter
+        </button>
+
+        {/* Bulk delete */}
+        {selectedIds.length > 0 && (
+          <button
+            onClick={handleBulkDelete}
+            className="px-4 gap-2 py-2 flex items-center border-[#989898] border text-white rounded-md font-medium text-sm"
+          >
+            <Trash2 className="w-4 h-4 text-green-500" />
+            Bulk Delete
           </button>
-
-          {selectedIds.length > 0 && (
-            <button onClick={handleBulkDelete} className="px-4 gap-2 py-2 flex items-center border-[#989898] border text-white rounded-md font-medium">
-              <Trash2 className="w-4 h-4 text-green-500" />
-              Bulk Delete
-            </button>
-          )}
-        </div>
+        )}
       </div>
-
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-gray-200 border-b border-[#ffffff40] text-[16px]">
-              <th className="py-3 pr-5 w-10">
-                <input
-                  type="checkbox"
-                  className="appearance-none h-4 w-4 border border-gray-300 rounded-[4px] checked:bg-green-500 checked:border-green-500"
-                  checked={paginated.every((u) => selectedIds.includes(getUid(u))) && paginated.length > 0}
-                  onChange={toggleSelectAll}
-                />
-              </th>
-              <th className="py-3 text-left font-[500]">User</th>
-              <th className="py-3 text-left font-[500]">Phone</th>
-              <th className="py-3 text-left font-[500]">Country</th>
-              <th className="py-3 text-left font-[500]">Date</th>
-              <th className="py-3 text-center font-[500]">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr><td colSpan={6} className="py-6 text-center text-gray-300">Loading users...</td></tr>
-            ) : paginated.length === 0 ? (
-              <tr><td colSpan={6} className="py-6 text-center text-gray-300">No users found</td></tr>
-            ) : (
-              paginated.map((u) => {
-                const uid = getUid(u);
-                return (
-                  <tr key={uid} className="border-b border-[#ffffff30] hover:bg-[#0f0f0f80] transition cursor-pointer">
-                    <td className="py-4">
-                      <input
-                        type="checkbox"
-                        className="appearance-none h-4 w-4 border border-gray-300 rounded-[4px] checked:bg-green-500 checked:border-green-500"
-                        checked={selectedIds.includes(uid)}
-                        onChange={() => toggleSelect(uid)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </td>
-                    <td className="py-4 flex items-center gap-3 text-white">
-                      {u.image ? (
-                        <img src={u.image} className="w-10 h-10 rounded-full object-cover" alt={u.name || "user"} />
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
-                          {(u.name || u.firstName || "U").charAt(0).toUpperCase()}
-                        </div>
-                      )}
-                      <div>
-                        <span className="font-medium text-[15px] block">
-                          {(u.name || [u.firstName, u.lastName].filter(Boolean).join(" ")).slice(0, 25)}
-                          {(u.name ?? "").length > 16 ? "..." : ""}
-                        </span>
-                        <span className="py-4 text-gray-300 text-[13px]">{(u.email ?? "N/A").slice(0, 30)}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 text-gray-300">{u.phone ?? u.phoneNumber ?? "N/A"}</td>
-                    <td className="py-4 text-gray-300">{u.country ?? "N/A"}</td>
-                    <td className="py-4 text-gray-300">{formatDate(u.createdAt)}</td>
-                    <td className="py-4 text-center relative actions-cell">
-                      <button onClick={(e) => { e.stopPropagation(); setOpenMenuFor((p) => (p === uid ? null : uid)); }} className="p-2 rounded-md hover:bg-[#22c55e]/20">
-                        <MoreVertical className="text-white" size={18} />
-                      </button>
-
-                    </td>
-                    {
-                      openMenuFor === uid && (
-                        <div className="absolute right-16 mt-16 w-40  bg-[#1c1c1c] border border-[#333] rounded-md shadow-lg text-white z-[999999] menu-popup" onClick={(e) => e.stopPropagation()}>
-                          <button className="w-full px-4 py-2 text-left hover:bg-[#22c55e]/20" onClick={() => { setOpenMenuFor(null); viewProfile(u); }}>View Profile</button>
-                          <button className="w-full px-4 py-2 text-left hover:bg-[#22c55e]/20" onClick={() => { setOpenMenuFor(null); openBalance(u); }}>Update Balance</button>
-                          <button className="w-full px-4 py-2 text-left text-red-400 hover:bg-[#22c55e]/20" onClick={() => { setOpenMenuFor(null); confirmDelete(uid); }}>Delete User</button>
-                        </div>
-                      )
-                    }
-
-                  </tr>
-
-                );
-
-              })
-            )}
-          </tbody>
-        </table>
-      </div>
-
-
-
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center mt-7 gap-2 text-white">
-          <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} className="px-3 py-1 border rounded">{`<`}</button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button key={i} onClick={() => goToPage(i + 1)} className={`px-3.5 py-1.5  text-[14px] border border-gray-300 rounded ${currentPage === i + 1 ? "border-green-500 text-green-500" : ""}`}>{i + 1}</button>
-          ))}
-          <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} className="px-3 py-1 border rounded">{`>`}</button>
-        </div>
-      )}
-
-      {/* Balance Modal */}
-      <Dialog open={isBalanceOpen} onOpenChange={setIsBalanceOpen}>
-        <DialogContent className="max-w-lg border border-[#333] bg-[#121212]">
-          {balanceUser && (
-            <UserBalanceUpdate
-              userId={String(balanceUser._id ?? balanceUser.id ?? "")}
-              userName={(balanceUser.name ?? [balanceUser.firstName, balanceUser.lastName].filter(Boolean).join(" ")).trim()}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
-  );
+
+    {/* Table */}
+    <div className="overflow-x-auto">
+      <table className="w-full text-xs sm:text-sm min-w-[700px]">
+        <thead>
+          <tr className="text-gray-200 border-b border-[#ffffff40] text-[14px] sm:text-[16px]">
+            <th className="py-3 pr-5 w-10">
+              <input
+                type="checkbox"
+                className="appearance-none h-4 w-4 border border-gray-300 rounded-[4px] checked:bg-green-500 checked:border-green-500"
+                checked={
+                  paginated.every((u) => selectedIds.includes(getUid(u))) &&
+                  paginated.length > 0
+                }
+                onChange={toggleSelectAll}
+              />
+            </th>
+            <th className="py-3 text-left font-[500]">User</th>
+            <th className="py-3 text-left font-[500]">Phone</th>
+            <th className="py-3 text-left font-[500]">Country</th>
+            <th className="py-3 text-left font-[500]">Date</th>
+            <th className="py-3 text-center font-[500]">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {isLoading ? (
+            <tr>
+              <td colSpan={6} className="py-6 text-center text-gray-300">
+                Loading users...
+              </td>
+            </tr>
+          ) : paginated.length === 0 ? (
+            <tr>
+              <td colSpan={6} className="py-6 text-center text-gray-300">
+                No users found
+              </td>
+            </tr>
+          ) : (
+            paginated.map((u) => {
+              const uid = getUid(u);
+              return (
+                <tr
+                  key={uid}
+                  className="border-b border-[#ffffff30] hover:bg-[#0f0f0f80] transition cursor-pointer relative"
+                >
+                  <td className="py-4">
+                    <input
+                      type="checkbox"
+                      className="appearance-none h-4 w-4 border border-gray-300 rounded-[4px] checked:bg-green-500 checked:border-green-500"
+                      checked={selectedIds.includes(uid)}
+                      onChange={() => toggleSelect(uid)}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </td>
+                  <td className="py-4 flex items-center gap-3 text-white">
+                    {u.image ? (
+                      <img
+                        src={u.image}
+                        className="w-10 h-10 rounded-full object-cover"
+                        alt={u.name || "user"}
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
+                        {(u.name || u.firstName || "U")
+                          .charAt(0)
+                          .toUpperCase()}
+                      </div>
+                    )}
+                    <div>
+                      <span className="font-medium text-[14px] sm:text-[15px] block">
+                        {(
+                          u.name ||
+                          [u.firstName, u.lastName]
+                            .filter(Boolean)
+                            .join(" ")
+                        ).slice(0, 25)}
+                        {(u.name ?? "").length > 16 ? "..." : ""}
+                      </span>
+                      <span className="py-4 text-gray-300 text-[11px] sm:text-[13px]">
+                        {(u.email ?? "N/A").slice(0, 30)}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="py-4 text-gray-300 text-[12px] sm:text-[14px]">
+                    {u.phone ?? u.phoneNumber ?? "N/A"}
+                  </td>
+                  <td className="py-4 text-gray-300 text-[12px] sm:text-[14px]">
+                    {u.country ?? "N/A"}
+                  </td>
+                  <td className="py-4 text-gray-300 text-[12px] sm:text-[14px]">
+                    {formatDate(u.createdAt)}
+                  </td>
+                  <td className="py-4 text-center relative actions-cell">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenMenuFor((p) => (p === uid ? null : uid));
+                      }}
+                      className="p-2 rounded-md hover:bg-[#22c55e]/20"
+                    >
+                      <MoreVertical className="text-white" size={18} />
+                    </button>
+
+                    {openMenuFor === uid && (
+                      <div
+                        className="absolute right-4 top-full mt-2 w-40 bg-[#1c1c1c] border border-[#333] rounded-md shadow-lg text-white z-[9999] menu-popup"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button
+                          className="w-full px-4 py-2 text-left hover:bg-[#22c55e]/20"
+                          onClick={() => {
+                            setOpenMenuFor(null);
+                            viewProfile(u);
+                          }}
+                        >
+                          View Profile
+                        </button>
+                        <button
+                          className="w-full px-4 py-2 text-left hover:bg-[#22c55e]/20"
+                          onClick={() => {
+                            setOpenMenuFor(null);
+                            openBalance(u);
+                          }}
+                        >
+                          Update Balance
+                        </button>
+                        <button
+                          className="w-full px-4 py-2 text-left text-red-400 hover:bg-[#22c55e]/20"
+                          onClick={() => {
+                            setOpenMenuFor(null);
+                            confirmDelete(uid);
+                          }}
+                        >
+                          Delete User
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </table>
+    </div>
+
+    {/* Pagination */}
+    {totalPages > 1 && (
+      <div className="flex justify-center mt-7 gap-2 text-white flex-wrap">
+        <button
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          {`<`}
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => goToPage(i + 1)}
+            className={`px-3.5 py-1.5 text-[13px] sm:text-[14px] border border-gray-300 rounded ${
+              currentPage === i + 1 ? "border-green-500 text-green-500" : ""
+            }`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          {`>`}
+        </button>
+      </div>
+    )}
+
+    {/* Balance Modal */}
+    <Dialog open={isBalanceOpen} onOpenChange={setIsBalanceOpen}>
+      <DialogContent className="max-w-lg border border-[#333] bg-[#121212]">
+        {balanceUser && (
+          <UserBalanceUpdate
+            userId={String(
+              balanceUser._id ?? balanceUser.id ?? ""
+            )}
+            userName={(
+              balanceUser.name ??
+              [balanceUser.firstName, balanceUser.lastName]
+                .filter(Boolean)
+                .join(" ")
+            ).trim()}
+          />
+        )}
+      </DialogContent>
+    </Dialog>
+  </div>
+);
 }

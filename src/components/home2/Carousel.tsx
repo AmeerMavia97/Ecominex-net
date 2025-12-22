@@ -18,44 +18,51 @@ export default function Carousel() {
         setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     };
 
-    return (
-        <div className="relative w-max abol" >
+   return (
+  <div className="relative w-full max-w-[650px] mx-auto">
+    {/* Arrows */}
+    <div className="flex justify-end gap-3 mb-4 pr-2 sm:pr-0">
+      <button
+        onClick={prevSlide}
+        className="bg-[#5e7467a4] text-white p-2.5 sm:p-3 rounded-full"
+      >
+        <ArrowLeft className="w-5 h-5" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="bg-[#5e7467a4] text-white p-2.5 sm:p-3 rounded-full"
+      >
+        <ArrowRight className="w-5 h-5" />
+      </button>
+    </div>
 
-            <div className="flex justify-end gap-3 mb-4">
-                <button
-                    onClick={prevSlide}
-                    className=" bg-[#5e7467a4] text-white p-3 rounded-full "
-                >
-                    <ArrowLeft className="size-5.5" />
-                </button>
-                <button
-                    onClick={nextSlide}
-                    className="  bg-[#5e7467a4] text-white p-3 rounded-full"
-                >
-                    <ArrowRight className="size-5.5" />
-                </button>
-            </div>
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={index}
-                    
-                    initial={{ opacity: 0, x: 100 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -100 }}
-                    transition={{ duration: 0.5 }}
-                    className=" flex items-center justify-center"
-                >
-                    <Image
-                        src={images[index]}
-                        alt={`carousel-${index}`}
-                        width={550}
-                        height={300}
-                        className="rounded-xl w-[650px] h-[440px]"
-                        priority
-                    />
-                </motion.div>
-            </AnimatePresence>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center justify-center"
+      >
+       <Image
+  src={images[index]}
+  alt={`carousel-${index}`}
+  width={650}
+  height={440}
+  className="
+    rounded-xl
+    w-[900px]
+    h-[320px]
+    sm:h-[260px]
+    md:h-[400px]
+    object-cover
+  "
+  priority
+/>
 
-        </div>
-    );
+      </motion.div>
+    </AnimatePresence>
+  </div>
+);
 }

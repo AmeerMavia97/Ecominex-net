@@ -57,7 +57,7 @@ function page() {
   return (
     <div>
       <LandingLayout>
-        <div className="overflow-x-hidden relative bg-[#111111] px-14 pt-6 pb-20 flex flex-col gap-10">
+        <div className="overflow-x-hidden relative bg-[#111111] px-7 pt-6 pb-20 flex flex-col gap-10">
            <div className='absolute overflow-x-hidden bg-[#22c55e]  blur-[189px] z-999 -top-0 -right-10 h-[160px] w-[160px]'></div>
           <ContactForm />
           <FAQSection faqs={FAQS} heading={'Explore Common Questions'}></FAQSection>

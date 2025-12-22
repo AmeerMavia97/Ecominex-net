@@ -85,115 +85,117 @@ const HomeFooter = () => {
        
     ];
 
-    return (
-        <footer className="relative bg-[#191919] text-white">
-            <div className="">
-                {/* Top Section */}
-                <div className="grid gap-8 md:grid-cols-4 bg-[#191919] pt-14 pb-20 px-16">
-                    {/* Brand Section */}
-                    <div className="flex flex-col items-start">
-                        <Link href="/" className="flex items-center space-x-2">
-                            <span className="text-3xl font-bold">Ecomine</span>
-                            <div className="-ml-2 flex h-8 w-7 items-center justify-center rounded-full bg-green-500">
-                                <span className="text-xl font-bold">X</span>
-                            </div>
-                        </Link>
-                    </div>
-
-                    {/* Footer Links */}
-                    <div className="col-span-2 grid grid-cols-3 gap-0">
-                        {footerLinks.map((section, index) => (
-                            <div key={index}>
-                                <ul className="space-y-2">
-                                    {section.links.map((link, linkIndex) => (
-                                        <li key={linkIndex}>
-                                            {link.isModal ? (
-                                                <LegalModal
-                                                    title={link.label}
-                                                    content={legalContent[link.label]}
-                                                />
-                                            ) : (
-                                                <Link
-                                                    href={link.href}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="block text-gray-300 transition-all duration-300 hover:pl-2 hover:text-green-500 text-[14.5px] font-[500] pr-8"
-                                                >
-                                                    {link.label}
-                                                </Link>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="flex flex-col items-start">
-                    <div className="flex gap-3 mt-3 relative z-50">
-                         {/* Facebook*/}
-                         <Link
-                                        href="https://www.facebook.com/ecominex"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="bg-[#1f1f1f] text-white p-3 rounded-full hover:bg-[#00a63e] transition-all duration-300 hover:scale-110"
-                                    >
-                                        <Facebook className="w-5 h-5" />
-                                    </Link>
-                                    {/* TikTok */}
-                                    <Link
-                                        href="https://www.tiktok.com/@ecominex.net"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="bg-[#1f1f1f] text-white px-2.5 flex items-center rounded-full hover:bg-[#00a63e] transition-all duration-300 hover:scale-110"
-                                    >
-                                         <svg viewBox="0 0 256 256" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill="#25F4EE" d="M170 80c11 8 24 13 37 14v32c-14-1-27-5-39-12v57c0 36-29 65-65 65s-65-29-65-65 29-65 65-65c5 0 9 .6 13 1v34c-4-2-9-3-14-3-18 0-32 14-32 32s14 32 32 32 32-14 32-32V32h36c2 21 13 39 32 48z" />
-                                            <path fill="#FE2C55" d="M160 80c11 8 24 13 37 14v32c-14-1-27-5-39-12v57c0 36-29 65-65 65s-65-29-65-65 29-65 65-65c5 0 9 .6 13 1v34c-4-2-9-3-14-3-18 0-32 14-32 32s14 32 32 32 32-14 32-32V32h30v6c2 19 12 35 33 42z" />
-                                            <path fill="#fff" d="M165 81c11 8 24 13 38 14v32c-15-1-28-5-41-12v56c0 34-28 62-62 62s-62-28-62-62 28-62 62-62c4 0 8 .5 12 1v34c-4-2-9-3-14-3-17 0-31 14-31 31s14 31 31 31 31-14 31-31V31h36c1 20 12 38 31 47z" />
-                                        </svg>
-                                    </Link>
-
-                                    {/* Instagram */}
-                                    <Link
-                                        href="https://www.instagram.com/ecominex/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="bg-[#1f1f1f] text-white p-3 rounded-full hover:bg-[#00a63e] transition-all duration-300 hover:scale-110"
-                                    >
-                                        <Instagram className="w-5 h-5" />
-                                    </Link>
-
-                                    {/* Twitter (X) */}
-                                    <Link
-                                        href="https://x.com/EcominexN59053"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="bg-[#1f1f1f] text-white p-3 rounded-full hover:bg-[#00a63e] transition-all duration-300 hover:scale-110"
-                                    >
-                                        <Twitter className="w-5 h-5" />
-                                    </Link>
-                                </div>
-                        <div>
-                            <h1 className="font-[600] text-[15.5px] mt-4 text-white">info@ecominex.com</h1>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Bottom Section */}
-                <div className="border-t border-gray-800 py-6">
-                    <div className="flex flex-col items-center justify-center md:flex-row">
-                        <p className="text-sm text-center text-white font-[600] md:mb-0">
-                            © {new Date().getFullYear()} EcomineX Technologies. All Rights
-                            Reserved.
-                        </p>
-                    </div>
-                </div>
-
-
+return (
+  <footer className="relative bg-[#191919] text-white ">
+    {/* Top Section */}
+    <div className="pt-10 pb-10 px-4 sm:px-8 lg:px-16 mb-10">
+      <div className="
+        max-w-6xl mx-auto
+        flex flex-col items-center gap-10
+        md:grid md:grid-cols-4 md:items-start md:gap-8
+        text-center
+      ">
+        {/* Brand Section */}
+        <div className="flex flex-col items-center">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-2xl sm:text-3xl font-bold">Ecomine</span>
+            <div className="flex h-7 w-6 sm:h-8 sm:w-7 items-center justify-center rounded-full bg-green-500">
+              <span className="text-lg sm:text-xl font-bold">X</span>
             </div>
-        </footer>
-    );
+          </Link>
+        </div>
+
+        
+       {/* Footer Links */}
+<div
+  className="
+    w-full
+    grid grid-cols-1
+    sm:grid-cols-2
+    md:grid-cols-3
+    gap-8
+    md:col-span-2
+    justify-items-center
+  "
+>
+  {footerLinks.map((section, index) => (
+    <div
+  key={index}
+  className="w-full max-w-[220px] text-center md:text-left"
+>
+
+      <ul className="space-y-2">
+        {section.links.map((link, linkIndex) => (
+          <li key={linkIndex}>
+            {link.isModal ? (
+              <LegalModal
+                title={link.label}
+                content={legalContent[link.label]}
+              />
+            ) : (
+              <Link
+                href={link.href}
+                className="block text-gray-300 hover:text-green-500 transition text-[14px] font-medium"
+              >
+                {link.label}
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
+
+        {/* Social + Email */}
+        <div className="flex flex-col items-center">
+          <div className="flex gap-3">
+            <Link
+              href="https://www.facebook.com/ecominex"
+              className="bg-[#1f1f1f] p-3 rounded-full hover:bg-[#00a63e] transition hover:scale-110"
+            >
+              <Facebook className="w-5 h-5" />
+            </Link>
+
+            <Link
+              href="https://www.tiktok.com/@ecominex.net"
+              className="bg-[#1f1f1f] p-3 rounded-full hover:bg-[#00a63e] transition hover:scale-110"
+            >
+              <Music2 className="w-5 h-5" />
+            </Link>
+
+            <Link
+              href="https://www.instagram.com/ecominex/"
+              className="bg-[#1f1f1f] p-3 rounded-full hover:bg-[#00a63e] transition hover:scale-110"
+            >
+              <Instagram className="w-5 h-5" />
+            </Link>
+
+            <Link
+              href="https://x.com/EcominexN59053"
+              className="bg-[#1f1f1f] p-3 rounded-full hover:bg-[#00a63e] transition hover:scale-110"
+            >
+              <Twitter className="w-5 h-5" />
+            </Link>
+          </div>
+
+          <p className="mt-4 font-semibold text-[14px] sm:text-[15px]">
+            info@ecominex.com
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Bottom Section */}
+    <div className="border-t border-gray-800 py-4">
+      <p className="text-xs sm:text-sm text-center font-semibold">
+        © {new Date().getFullYear()} EcomineX Technologies. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+);
+
 };
 
 export default HomeFooter;

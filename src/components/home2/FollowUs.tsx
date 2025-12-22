@@ -6,7 +6,7 @@ import Link from "next/link";
 const IMAGES = [
   "/Follow6.jpg",
   "/Follow1.jpg",
-  "/Follow5.png",
+
   "/Follow2.jpg",
   "/Follow3.jpeg",
   "/Follow4.webp",
@@ -96,73 +96,91 @@ export default function PhotoStrip() {
   }, []);
 
   return (
-    <section className="w-full py-10 px-16 relative">
-      {/* header */}
-      <div className='absolute overflow-hidden bg-[#22c55e]  blur-[139px]  -left-10 h-[120px] w-[120px]'></div>
-      <div className="flex flex-col items-center text-center">
-        <h1 className="text-white font-[700] text-[44px] leading-[53px]">
-          Follow <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">Us</span>
-        </h1>
-        <p className="mt-2 text-[14px] text-gray-300">Learn more about us on Instagram!</p>
-        <div className="mt-4">
-          <Link
-            href="https://www.instagram.com/ecominex/"
-            target="_blank"
-            rel="noopener noreferrer"
+  <section className="w-full bg-[#111] py-8 sm:py-10 px-4 sm:px-8 lg:px-16 relative">
+    {/* green glow */}
+    <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] -left-10 top-4 h-[120px] w-[120px]" />
+
+    {/* header */}
+    <div className="flex flex-col items-center text-center">
+      <h1 className="text-white font-[600] text-2xl sm:text-3xl md:text-[44px] leading-snug md:leading-[53px]">
+        Follow{" "}
+        <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
+          Us
+        </span>
+      </h1>
+      <p className="mt-2 text-[13px] sm:text-[14px] text-gray-300">
+        Learn more about us on Instagram!
+      </p>
+      <div className="mt-4">
+        <Link
+          href="https://www.instagram.com/ecominex/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="font-semibold border px-5 sm:px-6 py-2.5 text-[12px] sm:text-[13.5px] rounded-full border-green-500 text-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all duration-300">
+            Follow
+          </button>
+        </Link>
+      </div>
+    </div>
+
+    {/* strip */}
+    <div className="mt-8 sm:mt-10 relative">
+      {/* Prev / Next (hide on very small screens if you want) */}
+      <button
+        onClick={() => scrollByCard(-1)}
+        aria-label="Previous"
+        className="hidden sm:flex absolute -left-4 md:-left-10 top-1/2 z-50 -translate-y-1/2"
+      >
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M15 6l-6 6 6 6"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+      <button
+        onClick={() => scrollByCard(1)}
+        aria-label="Next"
+        className="hidden sm:flex absolute -right-4 md:-right-10 top-1/2 z-50 -translate-y-1/2"
+      >
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M9 6l6 6-6 6"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      <ul
+        ref={scroller}
+        className="flex w-full overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
+      >
+        <style jsx>{`ul::-webkit-scrollbar { display: none; }`}</style>
+        {IMAGES.map((src, i) => (
+          <li
+            key={i}
+            data-card
+            className="relative snap-start shrink-0 w-[200px] h-[200px] sm:w-[225px] sm:h-[225px] rounded-3xl overflow-hidden bg-[#181616] mx-2 sm:mx-[11.5px]"
           >
-            <button className="font-[700] border px-6 py-2.5 text-[13.5px] rounded-full border-green-500 text-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all duration-300">
-              Follow
-            </button>
-          </Link>
-
-        </div>
-      </div>
-
-      {/* strip */}
-      <div className="mt-10 relative">
-        {/* Prev / Next */}
-        <button
-          onClick={() => scrollByCard(-1)}
-          aria-label="Previous"
-          className="absolute -left-10 top-1/2 z-50 -translate-y-1/2"
-        >
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <path d="M15 6l-6 6 6 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-        <button
-          onClick={() => scrollByCard(1)}
-          aria-label="Next"
-          className="absolute -right-10 top-1/2 z-50 -translate-y-1/2"
-        >
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6l6 6-6 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-
-        <ul
-          ref={scroller}
-          className="flex w-full overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
-        >
-          <style jsx>{`ul::-webkit-scrollbar { display: none; }`}</style>
-          {IMAGES.map((src, i) => (
-            <li
-              key={i}
-              data-card
-              className="relative snap-start shrink-0 w-[225px] h-[225px] rounded-3xl overflow-hidden bg-[#181616] mx-[11.5px]"
-            >
-              <div className="bg-[#0000003e] absolute inset-0 z-10" />
-              <Image
-                src={src}
-                alt={`gallery-${i + 1}`}
-                fill
-                className="object-cover transition-transform duration-300 hover:scale-[1.03]"
-                priority={i < 2}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
+            <div className="bg-[#0000003e] absolute inset-0 z-10" />
+            <Image
+              src={src}
+              alt={`gallery-${i + 1}`}
+              fill
+              className="object-cover transition-transform duration-300 hover:scale-[1.03]"
+              priority={i < 2}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+);
 }

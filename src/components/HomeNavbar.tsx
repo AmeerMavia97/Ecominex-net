@@ -57,7 +57,7 @@ const HomeNavbar = () => {
   ];
 
   return (
-    <header className="relative bg-[#101010] text-white px-20">
+    <header className="relative bg-[#101010] text-white px-5">
       {/* Desktop Navbar */}
       <div className="hidden md:block">
         <div className="flex items-center justify-between py-7">
@@ -76,8 +76,9 @@ const HomeNavbar = () => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`relative font-[500] hover:text-green-500 text-[14px] transition-colors ${pathname === link.href ? "text-green-500" : "text-white"
-                    }`}
+                  className={`relative font-[500] hover:text-green-500 text-[14px] transition-colors ${
+                    pathname === link.href ? "text-green-500" : "text-white"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -90,24 +91,20 @@ const HomeNavbar = () => {
                 {isLoading ? (
                   <div className="h-6 w-24 animate-pulse rounded bg-gray-700"></div>
                 ) : isAuthenticated ? (
-                  <Link href={user?.role === "admin" ? "/Dashboard" : "/user/dashboard"}>
-                    <button className="!font-semibold border-[1px] px-4 py-2 text-[13.5px] rounded-full border-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all">
-                 Dashboard
-                </button>
+                  <Link href="/Dashboard">
+                    <span className="text-green-500 font-bold">Dashboard</span>
                   </Link>
                 ) : (
                   <Link
                     href="/auth/signin"
-                   
+                    className="transition-colors hover:text-green-500 text-[12px] font-[550] text-[#dedede] tracking-[0.5px]"
                   >
-                    <button className="!font-semibold border-[1px] px-4 py-2 text-[12.5px] rounded-full border-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all tracking-[0.5px]">
-                      LOGIN / REGISTER
-                    </button>
+                    LOGIN / REGISTER
                   </Link>
                 )}
               </div>
 
-              <Link href="/booking">
+              <Link href="/contactUs">
                 <button className="!font-semibold border-[1px] px-4 py-2 text-[13.5px] rounded-full border-green-500 cursor-pointer hover:bg-green-500 hover:text-black transition-all">
                   Book Appointment
                 </button>

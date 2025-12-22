@@ -49,14 +49,14 @@ const FAQS: QA[] = [
 function LandingHome() {
   return (
     <>
-      <div className=" bg-[#101010] overflow-hidden relative px-20">
+      <div className=" bg-[#101010] overflow-hidden relative px-10">
         <MiningHeroSlider></MiningHeroSlider>
         <Service></Service>
         <HowItsWork></HowItsWork>
 
       </div>
       <MarqueeSection></MarqueeSection>
-      <div className=" bg-[#101010] overflow-hidden relative px-20">
+      <div className=" bg-[#101010] overflow-hidden relative px-10">
         <AboutUs
           title="About Ecomine Hosting"
           highlight="Ecomine"

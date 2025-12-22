@@ -68,60 +68,75 @@ const CARDS: Card[] = [
 
 export default function ServicesSection() {
     return (
-        <section className="w-full bg-transparent py-20 relative ">
-            <div className='text-center items-center flex flex-col text-white'>
+  <section className="w-full bg-transparent py-12 sm:py-10 lg:py-20 relative">
+    {/* Heading + description */}
+    <div className="flex flex-col items-center text-center text-white px-4">
+      <h1 className="font-[600] text-3xl sm:text-4xl md:text-[48px]">
+        Our{" "}
+        <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
+          Services
+        </span>
+      </h1>
 
-                <h1 className='font-[700] text-[48px]'>Our <span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Services</span></h1>
+      <p className="mt-3 text-xs sm:text-sm md:text-[14.5px] text-[#d2d2d2] w-full sm:w-[80%] md:w-[60%] leading-relaxed">
+        We offer you turnkey solutions for getting started in mining, without
+        having to manage the purchase, installation, management and maintenance
+        of the machines.
+      </p>
+    </div>
 
-                <p className='w-[60%] text-[#d2d2d2] text-[14.5px]'>We offer you turnkey solutions for getting started in mining, without having to manage
-
-                    the purchase, installation, management and maintenance of the machines.</p>
-
+    {/* Cards */}
+    <div className="mt-8 sm:mt-10 relative  px-3 sm:px-4 md:px-6">
+      <div className="grid gap-6 sm:gap-8 lg:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {CARDS.map((card, i) => (
+          <article
+            key={i}
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#1a1a1a] to-[#111] py-8 sm:py-10 lg:py-12 px-6 sm:px-7 lg:px-9 shadow-[0_8px_30px_rgb(0,0,0,0.3)] min-h-[260px] lg:h-[350px]"
+          >
+            {/* background image + overlay */}
+            <div>
+              <img
+                className="pointer-events-none select-none absolute -right-20 top-14 opacity-25 max-w-[60%] sm:max-w-none"
+                src={card.bgImg}
+                alt=""
+              />
+              <div className="absolute inset-0 bg-[#2e2e2ea2]" />
             </div>
-            <div className=" mt-10 z-50 relative px-3">
-                <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-                    {CARDS.map((card, i) => (
-                        <article
-                            key={i}
-                            className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#1a1a1a] to-[#111] py-12 h-[350px] px-9 shadow-[0_8px_30px_rgb(0,0,0,0.3)] "
-                        >
-                            <div>
-                                <img className="absolute -right-20 top-14 opacity-25" src={card.bgImg} alt="" />
-                                <div className="absolute w-full h-full left-0 top-0  bg-[#2e2e2ea2] " />
-                            </div>
-                            {/* faint background image */}
 
+            {/* content */}
+            <h3 className="relative z-10 mb-3 sm:mb-4 leading-tight font-extrabold tracking-tight text-white">
+              <span className="block text-2xl sm:text-[28px] lg:text-[32px] leading-[1.1]">
+                {card.titleTop}
+              </span>
+              <span className="block text-2xl sm:text-[28px] lg:text-[32px] text-green-500">
+                {card.titleBottom}
+              </span>
+            </h3>
 
-                            <h3 className="relative z-10 mb-4 leading-tight  font-extrabold tracking-tight text-white">
-                                <span className="block text-[32px] leading-[27px]">{card.titleTop} </span>
-                                <span className="block text-[32px] text-green-500">{card.titleBottom}</span>
-                            </h3>
+            <ul className="relative z-10 space-y-3 sm:space-y-4">
+              <li className="pl-5">
+                <span className="absolute ml-[-18px] mt-2 inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
+                <p className="text-gray-300 text-xs sm:text-[12.5px] leading-snug">
+                  {card.description}
+                </p>
+              </li>
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
 
+    {/* green blur */}
+    <div className="absolute overflow-hidden bg-[#22c55e] -right-10 bottom-10 sm:bottom-16 blur-[139px] h-[250px] sm:h-[350px] w-[208px]" />
 
-                            <ul className="relative z-10 space-y-4">
-                                {/* {card.bullets.map((b, j) => ( */}
-                                <li className="pl-5">
-                                    {/* green dot */}
-                                    <span className="absolute ml-[-18px] mt-3 inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
-                                    {/* <p className="text-white text-[16px] font-semibold mb-2 leading-[19px]">
-                                            {b.title}
-                                        </p> */}
-                                    <p className="text-gray-300 leading-snug text-[12.5px]">{card.description}</p>
-                                </li>
-                                {/* ))} */}
-                            </ul>
-                        </article>
-                    ))}
-                </div>
-            </div>
-            <div className='absolute overflow-hidden bg-[#22c55e] -right-10 bottom-16 blur-[139px]  h-[350px] w-[208px]'></div>
-            <div className="items-center flex justify-center mt-10">
-                <Link href="/calculator/">
-                    <button className="!font-[700] border-[1px] px-7 py-3 text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition">
-                        Calculate my Profits
-                    </button>
-                </Link>
-            </div>
-        </section>
-    );
+    {/* CTA */}
+    <div className="flex justify-center mt-8 sm:mt-10 px-4">
+      <Link href="/calculator/">
+        <button className="font-semibold border px-6 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-[13.5px] rounded-full border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition">
+          Calculate my Profits
+        </button>
+      </Link>
+    </div>
+  </section>
+);
 }

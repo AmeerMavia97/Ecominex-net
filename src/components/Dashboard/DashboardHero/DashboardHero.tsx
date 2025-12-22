@@ -116,147 +116,168 @@ export default function DashboardHero() {
     }
 
 
-    return (
-        <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {stats.map((item, index) => (
-                    <div
-                        key={index}
-                        className={`relative px-5 py-[26px] rounded-[25px] shadow-sm 
+   return (
+  <>
+    {/* Top stats grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {stats.map((item, index) => (
+        <div
+          key={index}
+          className={`relative px-5 py-[26px] rounded-[25px] shadow-sm 
             flex flex-col gap-4.5 justify-between
-            ${item.gradient
-                                ? "bg-gradient-to-b from-[#1dae52] to-[#08381a] border-none"
-                                : "bg-[#1b1b1b] "
-                            }`}
-                    >
-                        {/* Top right arrow icon */}
-                        <Link className="absolute right-0 top-0" href={item.navigate}>
-                            <div className={`absolute top-3 p-1.5 right-3 text-lg opacity-100 border-[1.5px] rounded-full ${item.gradient ? "!bg-[#fff] " : "bg-transparent"} border-gray-200`}>
-                                <ArrowUpRight className={`size-5.5 ${item.gradient ? "text-[#000]" : "text-gray-200"}`} />
-                            </div>
-                        </Link>
-
-                        <h3 className="text-[15px] font-medium text-gray-100">{item.title}</h3>
-                        <p className="text-[52px] leading-[55px] font-medium text-gray-200">{item.value}</p>
-                        <span className={`text-[12.5px] ${item.gradient ? "text-gray-200" : "text-gray-300"}`}>
-                            {item.note}
-                        </span>
-                    </div>
-                ))}
+            ${
+              item.gradient
+                ? "bg-gradient-to-b from-[#1dae52] to-[#08381a] border-none"
+                : "bg-[#1b1b1b]"
+            }`}
+        >
+          {/* Top right arrow icon */}
+          <Link className="absolute right-0 top-0" href={item.navigate}>
+            <div
+              className={`absolute top-3 p-1.5 right-3 text-lg opacity-100 border-[1.5px] rounded-full ${
+                item.gradient ? "!bg-[#fff]" : "bg-transparent"
+              } border-gray-200`}
+            >
+              <ArrowUpRight
+                className={`size-5.5 ${
+                  item.gradient ? "text-[#000]" : "text-gray-200"
+                }`}
+              />
             </div>
+          </Link>
 
+          <h3 className="text-[15px] font-medium text-gray-100">
+            {item.title}
+          </h3>
+          <p className="text-[40px] sm:text-[52px] leading-[46px] sm:leading-[55px] font-medium text-gray-200">
+            {item.value}
+          </p>
+          <span
+            className={`text-[12.5px] ${
+              item.gradient ? "text-gray-200" : "text-gray-300"
+            }`}
+          >
+            {item.note}
+          </span>
+        </div>
+      ))}
+    </div>
 
-            <div className="grid grid-cols-2  gap-8 mt-7">
-                <div className="bg-[#1b1b1b] shadow-md rounded-[20px] py-6.5 w-full max-w-xl">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-4  px-6 ">
-                        <h2 className="text-[25.5px] font-[500] text-white">Recent Joined</h2>
-                        <Link href={"/Dashboard/AllUser"}>
-                            <button className="px-1 text-center py-1 text-sm font-medium bg-transparent border-green-500 border-b-[1.5px] flex items-center gap-2 text-gray-200 hover:text-green-500 ">
-                                View All <ArrowRight className="size-4.5" />
-                            </button></Link>
-                    </div>
+    {/* Bottom two cards */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-7">
+      {/* Recent Joined */}
+      <div className="bg-[#1b1b1b] shadow-md rounded-[20px] py-6.5 w-full max-w-full md:max-w-xl">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4 px-4 sm:px-6">
+          <h2 className="text-[20px] sm:text-[25.5px] font-[500] text-white">
+            Recent Joined
+          </h2>
+          <Link href={"/Dashboard/AllUser"}>
+            <button className="px-1 text-center py-1 text-xs sm:text-sm font-medium bg-transparent border-green-500 border-b-[1.5px] flex items-center gap-2 text-gray-200 hover:text-green-500">
+              View All <ArrowRight className="size-4.5" />
+            </button>
+          </Link>
+        </div>
 
-                    {/* List */}
-                    <div className="">
-                        {recentUsers.map((m, index) => {
-                            const fullName = (m.name || [m.firstName, m.lastName].filter(Boolean).join(" ")).slice(0, 25)
-                            const dots = ((m.name || [m.firstName, m.lastName].filter(Boolean).join(" ")).length > 16) ? "..." : ""
-                            return (
-                                <div
-                                    key={index}
-                                    className="flex items-center justify-between px-3 mx-4 pt-5 pb-3.5 border-b border-[#555]
-        transition-all duration-300 hover:scale-[1.01] hover:-rotate-1"
-                                >
-                                    <div className="flex items-center  gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
-                                            {(m.firstName || "U").charAt(0).toUpperCase()}
-                                        </div>
+        {/* List */}
+        <div>
+          {recentUsers.map((m, index) => {
+            const fullName = (
+              m.name ||
+              [m.firstName, m.lastName].filter(Boolean).join(" ")
+            ).slice(0, 25);
+            const dots =
+              (
+                m.name ||
+                [m.firstName, m.lastName].filter(Boolean).join(" ")
+              ).length > 16
+                ? "..."
+                : "";
+            return (
+              <div
+                key={index}
+                className="flex items-center justify-between px-3 mx-4 pt-5 pb-3.5 border-b border-[#555]
+                  transition-all duration-300 hover:scale-[1.01] hover:-rotate-1"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
+                    {(m.firstName || "U").charAt(0).toUpperCase()}
+                  </div>
 
-                                        <div>
-                                            <p className="font-medium text-gray-300">
-                                                {fullName + dots}
-                                            </p>
-                                            <p className="text-[14px] text-gray-300 font-medium">{(m.email ?? "N/A").slice(0, 30)}</p>
-                                        </div>
-
-                                    </div>
-                                    <div> <p className="text-[14px] text-end text-gray-300"> <span className="font-medium">{formatDate(m.createdAt)}</span> </p> </div>
-                                </div>
-                            )
-                        })}
-
-                    </div>
+                  <div>
+                    <p className="font-medium text-gray-300">
+                      {fullName + dots}
+                    </p>
+                    <p className="text-[12px] sm:text-[14px] text-gray-300 font-medium">
+                      {(m.email ?? "N/A").slice(0, 30)}
+                    </p>
+                  </div>
                 </div>
-                <div className="bg-[#1b1b1b] shadow-md rounded-[20px] py-6.5 w-full max-w-xl">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-4  px-6 ">
-                        <h2 className="text-[25.5px] font-[500] text-white">Recent Contacts</h2>
-                        <Link href="/Dashboard/contactUs/">
-
-                            <button className="px-1 text-center py-1 text-sm font-medium bg-transparent border-green-500 border-b-[1.5px] flex items-center gap-2 text-gray-200 hover:text-green-500">
-                                View All <ArrowRight className="size-4.5" />
-                            </button>
-                        </Link>
-                    </div>
-
-                    {/* List */}
-                    <div className="">
-                        {recentContacts.map((m, index) => (
-
-                            <div
-
-                                key={index}
-
-                                className="flex items-center justify-between px-3 mx-4 pt-5 pb-3.5 border-b border-[#555]
-
-        transition-all duration-300 hover:scale-[1.01] hover:-rotate-1"
-
-                            >
-
-                                <div className="flex items-center gap-3">
-
-                                    <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
-
-                                        {(m.name || "U").charAt(0).toUpperCase()}
-
-                                    </div>
-
-                                    {/* Name + Email */}
-
-                                    <div>
-
-                                        <p className="font-medium text-gray-300">{m.name}</p>
-
-                                        <p className="text-[13px] text-gray-300">
-
-                                            <span className="font-medium">{m.email}</span>
-
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                                <div>
-
-                                    <span className={`px-3 py-1 text-[12px] font-medium rounded-full ${m.status === "read" ? "bg-green-500" : "bg-yellow-300"}`}>
-
-                                        {m.status}
-
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        ))}
-
-
-                    </div>
+                <div>
+                  <p className="text-[11px] sm:text-[14px] text-end text-gray-300">
+                    <span className="font-medium">
+                      {formatDate(m.createdAt)}
+                    </span>
+                  </p>
                 </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Recent Contacts */}
+      <div className="bg-[#1b1b1b] shadow-md rounded-[20px] py-6.5 w-full max-w-full md:max-w-xl">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4 px-4 sm:px-6">
+          <h2 className="text-[20px] sm:text-[25.5px] font-[500] text-white">
+            Recent Contacts
+          </h2>
+          <Link href="/Dashboard/contactUs/">
+            <button className="px-1 text-center py-1 text-xs sm:text-sm font-medium bg-transparent border-green-500 border-b-[1.5px] flex items-center gap-2 text-gray-200 hover:text-green-500">
+              View All <ArrowRight className="size-4.5" />
+            </button>
+          </Link>
+        </div>
+
+        {/* List */}
+        <div>
+          {recentContacts.map((m, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between px-3 mx-4 pt-5 pb-3.5 border-b border-[#555]
+                transition-all duration-300 hover:scale-[1.01] hover:-rotate-1"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
+                  {(m.name || "U").charAt(0).toUpperCase()}
+                </div>
+
+                {/* Name + Email */}
+                <div>
+                  <p className="font-medium text-gray-300 text-sm sm:text-base">
+                    {m.name}
+                  </p>
+                  <p className="text-[11px] sm:text-[13px] text-gray-300">
+                    <span className="font-medium">{m.email}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <span
+                  className={`px-3 py-1 text-[11px] sm:text-[12px] font-medium rounded-full ${
+                    m.status === "read" ? "bg-green-500" : "bg-yellow-300"
+                  }`}
+                >
+                  {m.status}
+                </span>
+              </div>
             </div>
-
-        </>
-    );
+          ))}
+        </div>
+      </div>
+    </div>
+  </>
+);
 }
