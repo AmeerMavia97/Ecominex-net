@@ -15,7 +15,7 @@ export default function MarqueeSection() {
   <section className="w-full bg-[#1a1a1a] py-10 sm:py-14 flex flex-col justify-center items-center relative  px-4">
     {/* Heading */}
     <div className="text-white text-center">
-      <h1 className="font-[600] text-xl sm:text-2xl md:text-[25px] leading-snug">
+      <h1 className="font-[700] text-[25px] text-xl sm:text-2xl md:text-[25px] leading-snug">
         Our World&apos;s{" "}
         <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
           Most Average

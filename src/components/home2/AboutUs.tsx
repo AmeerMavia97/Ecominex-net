@@ -74,20 +74,25 @@ export default function AboutUs({
           <div className="text-transparent ml-4 sm:ml-5 z-20 bg-green-600 px-4 sm:px-5 py-4 sm:py-5 rounded-full" />
         </div>
 
-        <h1 className="font-[600] text-2xl sm:text-3xl md:text-[36px] lg:text-[44px] leading-snug md:leading-[46px] lg:leading-[53px] w-full md:w-[85%] lg:w-[80%]">
-          {title.split(new RegExp(`(${highlight})`, "gi")).map((part, idx) =>
-            part.toLowerCase() === highlight.toLowerCase() ? (
-              <span
-                key={idx}
-                className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"
-              >
-                {part}
-              </span>
-            ) : (
-              part
-            )
-          )}
-        </h1>
+        <h1
+  className="font-[700]
+             text-3xl sm:text-4xl md:text-[36px] lg:text-[44px]
+             leading-tight sm:leading-snug md:leading-[46px] lg:leading-[53px]
+             w-full md:w-[85%] lg:w-[80%]"
+>
+  {title.split(new RegExp(`(${highlight})`, "gi")).map((part, idx) =>
+    part.toLowerCase() === highlight.toLowerCase() ? (
+      <span
+        key={idx}
+        className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent"
+      >
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  )}
+</h1>
 
         {paragraphs.map((p, idx) => (
           <p

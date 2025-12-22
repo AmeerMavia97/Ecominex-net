@@ -1,79 +1,193 @@
-import React from "react";
-// import { Card } from "@/components/ui/Card.jsx";
-import { Cards } from "@/components/ui/Cards"
-import { Cloud, Thermometer, Cpu, Microchip } from "lucide-react";
+"use client";
 
-const features = [
-  {
-    icon: Cloud,
-    title: "HOSTING FACILITY IN UAE",
-    description:
-      "We offer cost effective hosting solutions for your miners in UAE with 24/7 monitoring and maintenance.",
-  },
-  {
-    icon: Thermometer,
-    title: "LIQUID COOLING",
-    description:
-      "State-of-the-art liquid cooling containers manufactured in UAE, delivering optimal performance across global operations.",
-  },
-  {
-    icon: Cpu,
-    title: "OVERCLOCKING YOUR BITMAIN EcomineX",
-    description:
-      "Advanced firmware optimization and immersion technology expertise to maximize your mining efficiency safely.",
-  },
-  {
-    icon: Microchip,
-    title: "GPU RIG SETUP",
-    description:
-      "Expert consultation for GPU mining rig configuration, optimization, and maintenance services.",
-  },
-];
+import { Cloud, Cpu, Microchip, Thermometer } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
-const OurFeature = () => {
-  return (
-    <section className="py-24 bg-[#101010] overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-          Our <span className="text-[#00c951]">Features</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Discover our comprehensive suite of mining solutions designed to maximize your crypto mining potential
-          </p>
-        </div>
-
-        <div className="relative">
-          <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 via-lime-600 to-lime-700 transform -translate-y-1/2" />
-          <div className="grid md:grid-cols-4 gap-8">
-            {features.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={index}
-                  className="relative animate-fade-in"
-                  style={{ animationDelay: `${index * 0.15}s` }}
-                >
-                  <div className="hidden md:flex absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-green-500 via-lime-600 to-lime-700 shadow-glow z-10" />
-                  <Cards className="bg-card border-border hover:border-primary/50 transition-all duration-300 p-6 h-full group hover:shadow-[0_4px_10px_#00c951]">
-                    <div className="mb-4 w-12 h-12 rounded-lg bg-gradient-to-r from-green-500 via-lime-600 to-lime-700 flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-6 h-6 text-primary-foreground" />
-                    </div>
-                    <h3 className="text-lg font-bold mb-2 group-hover:text-[#fff] transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {item.description}
-                    </p>
-                  </Cards>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+type OurFeatures = {
+    icons: JSX.Element; 
+    titleTop: string;
+    titleBottom: string;
+    description: string;
+    bgImg: string;
 };
 
-export default OurFeature;
+const ITEMS: OurFeatures[] = [
+    {
+        icons: <Cloud className="size-16 text-green-500" />,
+        titleTop: "Hosting",
+        titleBottom: "Facility In UAE",
+        description: "We offer cost effective hosting solutions for your miners in UAE with 24/7 monitoring and maintenance.",
+        bgImg: "/globe-s.svg",
+    },
+    {
+        icons: <Thermometer className="size-16 text-green-500" />,
+        titleTop: "Liquid",
+        titleBottom: "Cooling",
+        description:
+            "State-of-the-art liquid cooling containers manufactured in UAE, delivering optimal performance across global operations.",
+        bgImg: "/Purchases-of-machines.png.webp",
+    },
+    {
+        icons: <Cpu className="size-16 text-green-500" />,
+        titleTop: "Over Clocking",
+        titleBottom: "Your Bitmain EcomineX",
+        description:
+            "Advanced firmware optimization and immersion technology expertise to maximize your mining efficiency safely.",
+        bgImg: "/container.png.webp",
+    },
+    {
+        icons: <Microchip className="size-16 text-green-500" />,
+        titleTop: "GPU",
+        titleBottom: "RIG Setuo",
+        description:
+            "Expert consultation for GPU mining rig configuration, optimization, and maintenance services.",
+        bgImg: "/globe-s.svg",
+    },
+
+];
+
+const GAP = 34;
+
+
+
+export default function OurFeatures() {
+    const wrapRef = useRef<HTMLDivElement | null>(null);
+    const [perView, setPerView] = useState(3);
+    const [cardW, setCardW] = useState(0);
+    const [index, setIndex] = useState(0);
+    const [paused, setPaused] = useState(false);
+
+    useEffect(() => {
+        const el = wrapRef.current;
+        if (!el) return;
+
+        const calc = () => {
+            const w = el.clientWidth;
+            const pv = w < 640 ? 1 : w < 999 ? 2 : 3;
+            setPerView(pv);
+            const totalGap = GAP * (pv - 1);
+            setCardW((w - totalGap) / pv);
+            const maxIdx = Math.max(0, ITEMS.length - pv);
+            setIndex((i) => Math.min(i, maxIdx));
+        };
+
+        calc();
+        const ro = new ResizeObserver(calc);
+        ro.observe(el);
+        return () => ro.disconnect();
+    }, []);
+
+    const maxIndex = Math.max(0, ITEMS.length - perView);
+    const step = cardW + GAP;
+
+    const go = (dir: -1 | 1) => {
+        setIndex((i) => {
+            let n = i + dir;
+            if (n > maxIndex) n = 0;
+            if (n < 0) n = maxIndex;
+            return n;
+        });
+    };
+
+    useEffect(() => {
+        if (paused) return;
+        const t = setInterval(() => go(1), 4000);
+        return () => clearInterval(t);
+    }, [paused, maxIndex, step]);
+
+    return (
+  <section className="w-full bg-[#111] py-12 sm:py-16 overflow-x-hidden relative px-4 sm:px-10 lg:px-20">
+    <div className="absolute overflow-hidden bg-[#22c55e] blur-[139px] -right-10 top-0 h-[140px] w-[140px] sm:h-[180px] sm:w-[180px]" />
+
+    <div>
+      <div className="text-center flex flex-col gap-4 items-center">
+        <h1 className="text-white font-[600] text-3xl sm:text-4xl lg:text-[48px] leading-tight lg:leading-[53px]">
+          Our
+          <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
+            {" "}
+            Features{" "}
+          </span>
+        </h1>
+        <p className="w-full sm:w-[70%] lg:w-[60%] text-[#d2d2d2] text-sm sm:text-[14.5px]">
+          Discover our comprehensive suite of mining solutions designed to
+          maximize your crypto mining potential
+        </p>
+      </div>
+
+      <div
+        ref={wrapRef}
+        className="relative mx-auto mt-8 sm:mt-10 rounded-3xl z-[99999]"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+      >
+        <div className="overflow-hidden rounded-[28px]">
+          <ul
+            className="flex items-stretch"
+            style={{
+              gap: `${GAP}px`,
+              transform: `translate3d(${-index * step}px, 0, 0)`,
+              transition: "transform 450ms ease",
+              willChange: "transform",
+            }}
+          >
+            {ITEMS.map((t, i) => (
+              <li
+                key={i}
+                className="shrink-0 relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#1a1a1a] to-[#111] py-10 sm:py-12 h-[370px] px-6 sm:px-9 shadow-[0_8px_30px_rgb(0,0,0,0.3)]"
+                style={{ width: `${cardW}px` }}
+              >
+                <div>
+                  <img
+                    className="absolute -right-20 top-14 opacity-25"
+                    src={t.bgImg}
+                    alt=""
+                  />
+                  <div className="absolute w-full h-full left-0 top-0 bg-[#2e2e2ea2]" />
+                </div>
+                <div className="relative z-50 flex flex-col justify-between gap-1">
+                  <div>{t.icons}</div>
+
+                  <h3 className="relative z-10 mb-3 mt-3 leading-tight font-extrabold tracking-tight text-white">
+                    <span className="block text-xl sm:text-[26px] leading-7 sm:leading-[30px]">
+                      {t.titleTop}
+                    </span>
+                    <span className="block text-xl sm:text-[26px] leading-8 sm:leading-[32px] text-green-500">
+                      {t.titleBottom}
+                    </span>
+                  </h3>
+
+                  <p className="text-sm leading-[22px] text-gray-200">
+                    {t.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Dots */}
+        <div className="mt-6 flex items-center justify-center gap-3">
+          {Array.from({ length: maxIndex + 1 }).map((_, d) => {
+            const active = d === index;
+            return (
+              <button
+                key={d}
+                aria-label={`Go to slide ${d + 1}`}
+                onClick={() => setIndex(d)}
+                className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full transition ${
+                  active
+                    ? "bg-green-500"
+                    : "bg-white/25 hover:bg-white/50"
+                }`}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+}

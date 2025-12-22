@@ -71,19 +71,19 @@ export default function ServicesSection() {
   <section className="w-full bg-transparent py-12 sm:py-10 lg:py-20 relative">
     {/* Heading + description */}
     <div className="flex flex-col items-center text-center text-white px-4">
-      <h1 className="font-[600] text-3xl sm:text-4xl md:text-[48px]">
-        Our{" "}
-        <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
-          Services
-        </span>
-      </h1>
+  <h1 className="font-[700] text-3xl sm:text-4xl md:text-[48px] leading-tight md:leading-[53px]">
+    Our{" "}
+    <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
+      Services
+    </span>
+  </h1>
 
-      <p className="mt-3 text-xs sm:text-sm md:text-[14.5px] text-[#d2d2d2] w-full sm:w-[80%] md:w-[60%] leading-relaxed">
-        We offer you turnkey solutions for getting started in mining, without
-        having to manage the purchase, installation, management and maintenance
-        of the machines.
-      </p>
-    </div>
+  <p className="mt-3 text-xs sm:text-sm md:text-[14.5px] text-[#d2d2d2] w-full sm:w-[80%] md:w-[60%] leading-relaxed">
+    We offer you turnkey solutions for getting started in mining, without
+    having to manage the purchase, installation, management and maintenance
+    of the machines.
+  </p>
+</div>
 
     {/* Cards */}
     <div className="mt-8 sm:mt-10 relative  px-3 sm:px-4 md:px-6">

@@ -71,9 +71,14 @@ function StepCard({
 export default function HowItsWork() {
     return (
         <section className="w-full bg-[#121212] py-14 px-2">
-            <div className=' text-white'>
-                <h1 className='font-[600] text-2xl sm:text-2xl md:text-[48px]'>How Its <span className='bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent'>Works</span></h1>
-            </div>
+            <div className="text-white">
+  <h1 className="font-[700] text-3xl sm:text-4xl md:text-[48px] leading-[1.15] md:leading-[53px]">
+    How Its{" "}
+    <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
+      Works
+    </span>
+  </h1>
+</div>
 
             <div className="mt-10">
                 <div className="relative">

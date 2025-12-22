@@ -101,7 +101,7 @@ export default function StrategicSection() {
 
       {/* RIGHT: text + buttons */}
       <div className="flex flex-col justify-center text-white w-full">
-        <h1 className="font-[600] text-2xl sm:text-3xl md:text-[36px] lg:text-[44px] leading-snug md:leading-[48px] lg:leading-[53px]">
+        <h1 className="font-[700] text-[44px] text-2xl sm:text-3xl md:text-[36px] lg:text-[44px] leading-snug md:leading-[48px] lg:leading-[53px]">
           <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
             Strategic{" "}
           </span>

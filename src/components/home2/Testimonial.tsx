@@ -120,7 +120,7 @@ export default function Testimonials() {
     <div className="max-w-6xl mx-auto">
       {/* Heading */}
       <div className="text-center">
-  <h1 className="text-white font-[600] text-2xl sm:text-3xl md:text-[48px] leading-snug md:leading-[53px]">
+  <h1 className="text-white font-[700] text-2xl sm:text-3xl md:text-[48px] leading-snug md:leading-[53px]">
     Testimonials
     <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
       {" "}

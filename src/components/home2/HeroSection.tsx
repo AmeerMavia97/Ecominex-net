@@ -91,7 +91,7 @@ const MiningHeroSlider = () => {
         <div className="text-white flex flex-col gap-4 text-center lg:text-left px-4 sm:px-6 lg:px-0">
           {/* Heading + Icons */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
-            <h1 className="font-[600] text-[30px] sm:text-[40px] lg:text-[60px] leading-tight">
+            <h1 className="font-[700] text-[60px] sm:text-[40px] lg:text-[60px] leading-tight">
               Start Mining Today
             </h1>
 

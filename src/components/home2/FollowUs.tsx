@@ -102,7 +102,7 @@ export default function PhotoStrip() {
 
     {/* header */}
     <div className="flex flex-col items-center text-center">
-      <h1 className="text-white font-[600] text-2xl sm:text-3xl md:text-[44px] leading-snug md:leading-[53px]">
+      <h1 className="text-white font-[700] text-[44px] text-2xl sm:text-3xl md:text-[44px] leading-snug md:leading-[53px]">
         Follow{" "}
         <span className="bg-gradient-to-r from-green-500 to-green-500 bg-clip-text text-transparent">
           Us
