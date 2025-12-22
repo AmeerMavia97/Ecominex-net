@@ -82,38 +82,42 @@ const DashboardHeader = ({ children, title, desc }: DashboardHeaderProps) => {
 
 
     return (
-  <div className="mb-7">
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-md px-2 py-1">
-      {/* LEFT – Title + Desc */}
-      <div className="relative w-full sm:max-w-2xl">
-        <h2 className="text-[22px] sm:text-[28px] md:text-[36px] mt-1 font-semibold text-white">
-          {title}
-        </h2>
-        <p className="text-gray-200 text-[13px] sm:text-[14px] mt-1">{desc}</p>
-      </div>
+    <header className="sticky top-0 z-40 bg-[#000]">
+      <div className="mb-4 sm:mb-7 px-3 sm:px-4 pt-3 pb-2 sm:py-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-md">
+          {/* LEFT – Title + Desc */}
+          <div className="relative w-full sm:max-w-2xl">
+            <h2 className="text-lg sm:text-2xl md:text-[28px] lg:text-[36px] mt-1 font-semibold text-white">
+              {title}
+            </h2>
+            <p className="text-gray-200 text-xs sm:text-sm md:text-[13px] mt-1">
+              {desc}
+            </p>
+          </div>
 
-      {/* RIGHT – Logout + Profile */}
-      <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
-        <button
-          onClick={handleAdminLogout}
-          className="w-max border-[1.5px] border-green-500 font-[600] text-[12px] sm:text-[13.5px] rounded-full px-5 sm:px-8 py-2 sm:py-2.5 cursor-pointer hover:bg-green-600 hover:scale-105 text-white transition-all duration-300"
-        >
-          Logout
-        </button>
+          {/* RIGHT – Logout + Profile */}
+          <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
+            <button
+              onClick={handleAdminLogout}
+              className="w-max border-[1.5px] border-green-500 font-[600] text-[11.5px] sm:text-[13.5px] rounded-full px-5 sm:px-8 py-2 sm:py-2.5 cursor-pointer hover:bg-green-600 hover:scale-105 text-white transition-all duration-300"
+            >
+              Logout
+            </button>
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link href={"/Dashboard/UserProfile"}>
-            <Image
-              src={userImg}
-              alt="Profile"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border border-gray-300"
-            />
-          </Link>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Link href={"/Dashboard/UserProfile"}>
+                <Image
+                  src={userImg}
+                  alt="Profile"
+                  className="w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full object-cover border border-gray-300"
+                />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-);
+    </header>
+  );
 };
 
 export default DashboardHeader;

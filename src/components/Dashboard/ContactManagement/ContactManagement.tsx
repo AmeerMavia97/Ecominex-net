@@ -282,148 +282,178 @@ export default function UsersTable() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-gray-200 border-b border-[#ffffff40] text-[16px]">
-              <th className="py-3 pr-5 w-10">
+      <div className="w-full overflow-x-auto">
+  <table className="w-full min-w-[820px] text-xs sm:text-sm md:min-w-0">
+    <thead>
+      <tr className="text-gray-200 border-b border-[#ffffff40] text-sm md:text-[16px]">
+        <th className="py-2 md:py-3 pr-3 md:pr-5 w-10">
+          <input
+            type="checkbox"
+            className="appearance-none h-4 w-4 border border-gray-300 rounded-[4px] checked:bg-green-500 checked:border-green-500"
+            checked={
+              paginated.every((u) => selectedIds.includes(getUid(u))) &&
+              paginated.length > 0
+            }
+            onChange={toggleSelectAll}
+          />
+        </th>
+        <th className="py-2 md:py-3 text-left font-[500] pl-1 md:pl-2 whitespace-nowrap">
+          User
+        </th>
+        <th className="py-2 md:py-3 text-left font-[500] whitespace-nowrap">
+          Phone
+        </th>
+        <th className="py-2 md:py-3 text-left font-[500] whitespace-nowrap">
+          Country
+        </th>
+        <th className="py-2 md:py-3 text-left font-[500] whitespace-nowrap">
+          Status
+        </th>
+        <th className="py-2 md:py-3 text-left font-[500] whitespace-nowrap">
+          Date
+        </th>
+        <th className="py-2 md:py-3 text-center font-[500] whitespace-nowrap">
+          Action
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {isLoading ? (
+        <tr>
+          <td colSpan={7} className="py-6 text-center text-gray-300 text-sm">
+            Loading users...
+          </td>
+        </tr>
+      ) : paginated.length === 0 ? (
+        <tr>
+          <td colSpan={7} className="py-6 text-center text-gray-300 text-sm">
+            No users found
+          </td>
+        </tr>
+      ) : (
+        paginated.map((u) => {
+          const uid = getUid(u);
+          return (
+            <tr
+              key={uid}
+              className="border-b border-[#ffffff30] hover:bg-[#0f0f0f80] transition cursor-pointer"
+            >
+              <td className="py-3 md:py-4 pr-1 md:pr-0">
                 <input
                   type="checkbox"
                   className="appearance-none h-4 w-4 border border-gray-300 rounded-[4px] checked:bg-green-500 checked:border-green-500"
-                  checked={
-                    paginated.every((u) => selectedIds.includes(getUid(u))) &&
-                    paginated.length > 0
-                  }
-                  onChange={toggleSelectAll}
+                  checked={selectedIds.includes(uid)}
+                  onChange={() => toggleSelect(uid)}
+                  onClick={(e) => e.stopPropagation()}
                 />
-              </th>
-              <th className="py-3 text-left font-[500] pl-2">User</th>
-              <th className="py-3 text-left font-[500]">Phone</th>
-              <th className="py-3 text-left font-[500]">Country</th>
-              <th className="py-3 text-left font-[500]">Status</th>
-              <th className="py-3 text-left font-[500]">Date</th>
-              <th className="py-3 text-center font-[500]">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={7} className="py-6 text-center text-gray-300">
-                  Loading users...
-                </td>
-              </tr>
-            ) : paginated.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="py-6 text-center text-gray-300">
-                  No users found
-                </td>
-              </tr>
-            ) : (
-              paginated.map((u) => {
-                const uid = getUid(u);
-                return (
-                  <tr
-                    key={uid}
-                    className="border-b border-[#ffffff30] hover:bg-[#0f0f0f80] transition cursor-pointer"
-                  >
-                    <td className="py-4">
-                      <input
-                        type="checkbox"
-                        className="appearance-none h-4 w-4 border border-gray-300 rounded-[4px] checked:bg-green-500 checked:border-green-500"
-                        checked={selectedIds.includes(uid)}
-                        onChange={() => toggleSelect(uid)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </td>
-                    <td className="py-4 flex items-center gap-3 text-white ">
-                      {u.image ? (
-                        <img
-                          src={u.image}
-                          className="w-10 h-10 rounded-full object-cover"
-                          alt={u.name ?? "user"}
-                        />
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-md text-green-400">
-                          {(u.name ?? u.firstName ?? "U").charAt(0).toUpperCase()}
-                        </div>
-                      )}
-                      <div className="w-max">
-                        <span className="font-medium text-[15px] block">
-                          {(u.name ??
-                            [u.firstName ?? "", u.lastName ?? ""]
-                              .filter(Boolean)
-                              .join(" ") ??
-                            "Unknown User"
-                          ).slice(0, 25)}
-                        </span>
-                        <span className="py-4 text-gray-300 text-[13px]">
-                          {(u.email ?? "N/A").slice(0, 30)}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 text-gray-300">{u.phone ?? "N/A"}</td>
-                    <td className="py-4 text-gray-300 pl-5">{u.country ?? "N/A"}</td>
-                    <td className="py-4 text-black text-[12.5px] ">
-                      <span className={`px-3 py-0.5 rounded-full ${u.status === "pending" ? "bg-yellow-300" : "bg-green-500"}`}>
-                        {u.status ?? "pending"}
-                      </span>
-                    </td>
-                    <td className="py-4 text-gray-300">{formatDate(u.createdAt)}</td>
-                    <td className="py-4 text-center actions-cell">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setOpenMenuFor((p) => (p === uid ? null : uid));
-                        }}
-                        className="p-2 rounded-md hover:bg-[#22c55e]/20"
-                      >
-                        <MoreVertical className="text-white" size={18} />
-                      </button>
+              </td>
 
-                      {openMenuFor === uid && (
-                        <div
-                          className="absolute right-16 mt-2 w-44 bg-[#1c1c1c] border border-[#333] rounded-md shadow-lg text-white z-[999999] menu-popup"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <button
-                            className="w-full px-4 py-2 text-left hover:bg-[#22c55e]/20"
-                            onClick={() => {
-                              setOpenMenuFor(null);
-                              handleViewDetails(u);
-                            }}
-                          >
-                            View Details
-                          </button>
-                          {u.status !== "read" && (
-                            <button
-                              className="w-full px-4 py-2 text-left hover:bg-[#22c55e]/20"
-                              onClick={() => {
-                                setOpenMenuFor(null);
-                                handleMarkAsRead(u);
-                              }}
-                            >
-                              Mark as Read
-                            </button>
-                          )}
-                          <button
-                            className="w-full px-4 py-2 text-left text-red-400 hover:bg-[#22c55e]/20"
-                            onClick={() => {
-                              setOpenMenuFor(null);
-                              confirmDelete(uid);
-                            }}
-                          >
-                            Delete Contact
-                          </button>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-      </div>
+              <td className="py-3 md:py-4 flex items-center gap-2 md:gap-3 text-white">
+                {u.image ? (
+                  <img
+                    src={u.image}
+                    className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover"
+                    alt={u.name ?? "user"}
+                  />
+                ) : (
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-sm md:text-md text-green-400">
+                    {(u.name ?? u.firstName ?? "U").charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <div className="min-w-[140px]">
+                  <span className="font-medium text-[14px] md:text-[15px] block">
+                    {(
+                      u.name ??
+                      [u.firstName ?? "", u.lastName ?? ""]
+                        .filter(Boolean)
+                        .join(" ") ??
+                      "Unknown User"
+                    ).slice(0, 25)}
+                  </span>
+                  <span className="text-gray-300 text-[12px] md:text-[13px]">
+                    {(u.email ?? "N/A").slice(0, 30)}
+                  </span>
+                </div>
+              </td>
+
+              <td className="py-3 md:py-4 text-gray-300 whitespace-nowrap">
+                {u.phone ?? "N/A"}
+              </td>
+
+              <td className="py-3 md:py-4 text-gray-300 pl-3 md:pl-5 whitespace-nowrap">
+                {u.country ?? "N/A"}
+              </td>
+
+              <td className="py-3 md:py-4 text-black text-[11px] md:text-[12.5px] whitespace-nowrap">
+                <span
+                  className={`px-2.5 md:px-3 py-0.5 rounded-full ${
+                    u.status === "pending" ? "bg-yellow-300" : "bg-green-500"
+                  }`}
+                >
+                  {u.status ?? "pending"}
+                </span>
+              </td>
+
+              <td className="py-3 md:py-4 text-gray-300 whitespace-nowrap">
+                {formatDate(u.createdAt)}
+              </td>
+
+              <td className="py-3 md:py-4 text-center actions-cell whitespace-nowrap relative">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpenMenuFor((p) => (p === uid ? null : uid));
+                  }}
+                  className="p-1.5 md:p-2 rounded-md hover:bg-[#22c55e]/20"
+                >
+                  <MoreVertical className="text-white" size={18} />
+                </button>
+
+                {openMenuFor === uid && (
+                  <div
+                    className="absolute right-0 md:right-16 mt-2 w-40 md:w-44 bg-[#1c1c1c] border border-[#333] rounded-md shadow-lg text-white z-[999999] menu-popup"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button
+                      className="w-full px-3 md:px-4 py-2 text-left text-sm hover:bg-[#22c55e]/20"
+                      onClick={() => {
+                        setOpenMenuFor(null);
+                        handleViewDetails(u);
+                      }}
+                    >
+                      View Details
+                    </button>
+                    {u.status !== "read" && (
+                      <button
+                        className="w-full px-3 md:px-4 py-2 text-left text-sm hover:bg-[#22c55e]/20"
+                        onClick={() => {
+                          setOpenMenuFor(null);
+                          handleMarkAsRead(u);
+                        }}
+                      >
+                        Mark as Read
+                      </button>
+                    )}
+                    <button
+                      className="w-full px-3 md:px-4 py-2 text-left text-sm text-red-400 hover:bg-[#22c55e]/20"
+                      onClick={() => {
+                        setOpenMenuFor(null);
+                        confirmDelete(uid);
+                      }}
+                    >
+                      Delete Contact
+                    </button>
+                  </div>
+                )}
+              </td>
+            </tr>
+          );
+        })
+      )}
+    </tbody>
+  </table>
+</div>
 
       {/* Pagination */}
       {totalPages > 1 && (

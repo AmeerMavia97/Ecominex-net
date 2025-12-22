@@ -103,7 +103,7 @@ export default function Sidebar({ menu, onLogout }: any) {
 
       {/* Mobile toggle button (shows when md:hidden) — place this in your layout header */}
       <button
-        className="md:hidden fixed top-4 left-4 z-[60] bg-[#1b1b1b] border border-white/10 p-2 rounded-md"
+        className="md:hidden fixed top-9  z-[60]  -left-2 p-2 rounded-md"
         onClick={() => setOpenMobile(true)}
       >
         <Menu className="text-white w-5 h-5" />
@@ -117,7 +117,7 @@ export default function Sidebar({ menu, onLogout }: any) {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="md:hidden fixed inset-y-0 left-0 z-[70] w-72 max-w-full text-white bg-[#1b1b1b] shadow-xl"
+            className="md:hidden fixed inset-y-0 left-0 z-[70] w-72 max-w-full text-white  shadow-xl"
           >
             {/* Close area */}
             <button
